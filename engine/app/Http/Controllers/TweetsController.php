@@ -73,7 +73,7 @@ class TweetsController extends Controller
             ], 500);
         }
     }
-    
+
     public function update(Request $request, $id)
     {
         try {
@@ -83,7 +83,7 @@ class TweetsController extends Controller
             $dataObj->tweet = $request->tweet;
             $dataObj->save();
             return response()->json([
-                'status' => 'success',
+                'status' => 'updated',
                 'data' => $dataObj,
             ], 200);
         } catch (\Exception $e) {
@@ -98,10 +98,20 @@ class TweetsController extends Controller
         try {
             $tweetModel = new Tweet();
             $dataObj = $tweetModel->find($id);
+            if (!$dataObj) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Tweet not found',
+                ], 404);
+            }
+
             $dataObj->delete();
+            $response['message'] = "Tweet deleted successfully";
+            $response['id'] = $id;
+
             return response()->json([
-                'status' => 'success',
-                'data' => $dataObj,
+                'status' => 'deleted',
+                'data' => $response,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
