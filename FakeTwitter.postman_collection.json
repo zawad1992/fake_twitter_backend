@@ -1,0 +1,2445 @@
+{
+	"info": {
+		"_postman_id": "14cb3b22-992d-4f48-893f-543c822cc172",
+		"name": "FakeTwitter",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25038743"
+	},
+	"item": [
+		{
+			"name": "health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/health",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"health"
+					]
+				},
+				"description": "Health Check API. If you get \\`**ok\\`** response then the system if functioning."
+			},
+			"response": []
+		},
+		{
+			"name": "db health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/ping",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"ping"
+					]
+				},
+				"description": "Check Database Health. If you found `MongoDB is accessible!` then Database connection is ok."
+			},
+			"response": []
+		},
+		{
+			"name": "register",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Generate random full name\r",
+							"const firstName = pm.variables.replaceIn('{{$randomFirstName}}')\r",
+							"const lastName = pm.variables.replaceIn('{{$randomLastName}}');\r",
+							"const fullName = firstName + ' ' + lastName;\r",
+							"\r",
+							"// Create email from name\r",
+							"const email = `${firstName}.${lastName}@example.com`.toLowerCase();\r",
+							"\r",
+							"console.log(fullName);\r",
+							"console.log(email);\r",
+							"\r",
+							"// Set the generated email as an environment or global variable\r",
+							"pm.environment.set(\"randFullName\", fullName);\r",
+							"pm.environment.set(\"randEmail\", email);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseData = pm.response.json();\r",
+							"\r",
+							"// Storing individual pieces of data with checks\r",
+							"pm.environment.set(\"status\", responseData.status ? responseData.status : null);\r",
+							"pm.environment.set(\"message\", responseData.message ? responseData.message : null);\r",
+							"\r",
+							"// Storing user data with checks\r",
+							"if (responseData.user) {\r",
+							"    pm.environment.set(\"userName\", responseData.user.name ? responseData.user.name : null);\r",
+							"    pm.environment.set(\"userEmail\", responseData.user.email ? responseData.user.email : null);\r",
+							"    pm.environment.set(\"userUpdatedAt\", responseData.user.updated_at ? responseData.user.updated_at : null);\r",
+							"    pm.environment.set(\"userCreatedAt\", responseData.user.created_at ? responseData.user.created_at : null);\r",
+							"    pm.environment.set(\"userId\", responseData.user._id ? responseData.user._id : null);\r",
+							"}\r",
+							"\r",
+							"// Storing authorization data with checks\r",
+							"if (responseData.authorisation) {\r",
+							"    pm.environment.set(\"authToken\", responseData.authorisation.token ? responseData.authorisation.token : null);\r",
+							"    pm.environment.set(\"authType\", responseData.authorisation.type ? responseData.authorisation.type : null);\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{randFullName}}\",\r\n    \"email\": \"{{randEmail}}\",\r\n    \"password\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/register",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"register"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "register static",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Zawadul Kawum\",\r\n    \"email\": \"zawad1992@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"register"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 19 Nov 2023 06:06:18 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1p PHP/8.1.10"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.10"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "58"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"message\": \"User created successfully\",\n    \"user\": {\n        \"name\": \"Zawadul Kawum\",\n        \"email\": \"zawad1992@gmail.com\",\n        \"updated_at\": \"2023-11-19T06:15:35.693000Z\",\n        \"created_at\": \"2023-11-19T06:15:35.693000Z\",\n        \"_id\": \"6559a807cff3bbaea20470c1\"\n    },\n    \"authorisation\": {\n        \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0Ojg4ODgvTEFSQVZFTC9mYWtlX3R3aXR0ZXJfYmFja2VuZC9hcGkvcmVnaXN0ZXIiLCJpYXQiOjE3MDAzNzQ1MzUsImV4cCI6MTcwMDM3ODEzNSwibmJmIjoxNzAwMzc0NTM1LCJqdGkiOiJ5UTNGQ2p6Nk04Qk84NWJGIiwic3ViIjoiNjU1OWE4MDdjZmYzYmJhZWEyMDQ3MGMxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.zvtumPut5D8DhagXlz8pmVHiWHw2AL0kQ2UnRQ0mRXA\",\n        \"type\": \"bearer\"\n    }\n}"
+				},
+				{
+					"name": "register",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{randFullName}}\",\r\n    \"email\": \"{{randEmail}}\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"register"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 19 Nov 2023 06:06:18 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1p PHP/8.1.10"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.10"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "58"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"message\": \"User created successfully\",\n    \"user\": {\n        \"name\": \"Madisen Schmidt\",\n        \"email\": \"madisen.schmidt@example.com\",\n        \"updated_at\": \"2023-11-19T06:06:18.984000Z\",\n        \"created_at\": \"2023-11-19T06:06:18.984000Z\",\n        \"_id\": \"6559a5dacff3bbaea20470c0\"\n    },\n    \"authorisation\": {\n        \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0Ojg4ODgvTEFSQVZFTC9mYWtlX3R3aXR0ZXJfYmFja2VuZC9hcGkvcmVnaXN0ZXIiLCJpYXQiOjE3MDAzNzM5NzgsImV4cCI6MTcwMDM3NzU3OCwibmJmIjoxNzAwMzczOTc4LCJqdGkiOiJlQU9DRlI4Z3pMNFE5NUVGIiwic3ViIjoiNjU1OWE1ZGFjZmYzYmJhZWEyMDQ3MGMwIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.Knj_piHfujdbSyAjMt87PzZyzoNQ3Y3UhSMFtKVlq5U\",\n        \"type\": \"bearer\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseData = pm.response.json();\r",
+							"\r",
+							"// Storing individual pieces of data with checks\r",
+							"pm.environment.set(\"status\", responseData.status ? responseData.status : null);\r",
+							"pm.environment.set(\"message\", responseData.message ? responseData.message : null);\r",
+							"\r",
+							"// Storing user data with checks\r",
+							"if (responseData.user) {\r",
+							"    pm.environment.set(\"userName\", responseData.user.name ? responseData.user.name : null);\r",
+							"    pm.environment.set(\"userEmail\", responseData.user.email ? responseData.user.email : null);\r",
+							"    pm.environment.set(\"userUpdatedAt\", responseData.user.updated_at ? responseData.user.updated_at : null);\r",
+							"    pm.environment.set(\"userCreatedAt\", responseData.user.created_at ? responseData.user.created_at : null);\r",
+							"    pm.environment.set(\"userId\", responseData.user._id ? responseData.user._id : null);\r",
+							"}\r",
+							"\r",
+							"// Storing authorization data with checks\r",
+							"if (responseData.authorisation) {\r",
+							"    pm.environment.set(\"authToken\", responseData.authorisation.token ? responseData.authorisation.token : null);\r",
+							"    pm.environment.set(\"authType\", responseData.authorisation.type ? responseData.authorisation.type : null);\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"zawad1992@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"login"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "login",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"zawad1992@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"login"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 19 Nov 2023 06:17:51 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1p PHP/8.1.10"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.10"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "56"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=98"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"user\": {\n        \"_id\": \"6559a807cff3bbaea20470c1\",\n        \"name\": \"Zawadul Kawum\",\n        \"email\": \"zawad1992@gmail.com\",\n        \"updated_at\": \"2023-11-19T06:15:35.693000Z\",\n        \"created_at\": \"2023-11-19T06:15:35.693000Z\"\n    },\n    \"authorisation\": {\n        \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0Ojg4ODgvTEFSQVZFTC9mYWtlX3R3aXR0ZXJfYmFja2VuZC9hcGkvbG9naW4iLCJpYXQiOjE3MDAzNzQ2NzEsImV4cCI6MTcwMDM3ODI3MSwibmJmIjoxNzAwMzc0NjcxLCJqdGkiOiJISnk4ckNMbDNwcktPMWdKIiwic3ViIjoiNjU1OWE4MDdjZmYzYmJhZWEyMDQ3MGMxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.xhC662MKekaFjmP8SZ_ckPepZ5iJPc-KjjaetC6aO30\",\n        \"type\": \"bearer\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "refresh",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseData = pm.response.json();\r",
+							"\r",
+							"// Storing authorization data with checks\r",
+							"if (responseData.authorisation) {\r",
+							"    pm.environment.set(\"authToken\", responseData.authorisation.token ? responseData.authorisation.token : null);\r",
+							"    pm.environment.set(\"authType\", responseData.authorisation.type ? responseData.authorisation.type : null);\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/refresh",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"refresh"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "refresh",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/refresh",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"refresh"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 19 Nov 2023 06:20:52 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1p PHP/8.1.10"
+						},
+						{
+							"key": "Vary",
+							"value": "Authorization"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.10"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "58"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=99"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"user\": {\n        \"_id\": \"6559a807cff3bbaea20470c1\",\n        \"name\": \"Zawadul Kawum\",\n        \"email\": \"zawad1992@gmail.com\",\n        \"updated_at\": \"2023-11-19T06:15:35.693000Z\",\n        \"created_at\": \"2023-11-19T06:15:35.693000Z\"\n    },\n    \"authorisation\": {\n        \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0Ojg4ODgvTEFSQVZFTC9mYWtlX3R3aXR0ZXJfYmFja2VuZC9hcGkvcmVmcmVzaCIsImlhdCI6MTcwMDM3NDg0OSwiZXhwIjoxNzAwMzc4NDUyLCJuYmYiOjE3MDAzNzQ4NTIsImp0aSI6IlRFeFg3TlE2OFVoaEJBV2UiLCJzdWIiOiI2NTU5YTgwN2NmZjNiYmFlYTIwNDcwYzEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.ek8r-6QHTV4C9QMFtP6Hc34ApNWqSUIakRdaWFhUIRE\",\n        \"type\": \"bearer\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "tweets save",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user_id\": \"{{userId}}\",\r\n    \"tweet\": \"{{$randomLoremSentences}}\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/tweets",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"tweets"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "refresh",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/refresh",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"refresh"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 19 Nov 2023 06:20:52 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1p PHP/8.1.10"
+						},
+						{
+							"key": "Vary",
+							"value": "Authorization"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.10"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "58"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=99"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"user\": {\n        \"_id\": \"6559a807cff3bbaea20470c1\",\n        \"name\": \"Zawadul Kawum\",\n        \"email\": \"zawad1992@gmail.com\",\n        \"updated_at\": \"2023-11-19T06:15:35.693000Z\",\n        \"created_at\": \"2023-11-19T06:15:35.693000Z\"\n    },\n    \"authorisation\": {\n        \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0Ojg4ODgvTEFSQVZFTC9mYWtlX3R3aXR0ZXJfYmFja2VuZC9hcGkvcmVmcmVzaCIsImlhdCI6MTcwMDM3NDg0OSwiZXhwIjoxNzAwMzc4NDUyLCJuYmYiOjE3MDAzNzQ4NTIsImp0aSI6IlRFeFg3TlE2OFVoaEJBV2UiLCJzdWIiOiI2NTU5YTgwN2NmZjNiYmFlYTIwNDcwYzEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.ek8r-6QHTV4C9QMFtP6Hc34ApNWqSUIakRdaWFhUIRE\",\n        \"type\": \"bearer\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "tweets",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseData = pm.response.json();\r",
+							"var ids = [];\r",
+							"\r",
+							"// Check if 'data' exists and is an array\r",
+							"if (responseData.data && Array.isArray(responseData.data)) {\r",
+							"    // Iterate over each element in the 'data' array\r",
+							"    responseData.data.forEach(item => {\r",
+							"        if (item._id) {\r",
+							"            ids.push(item._id); // Add the '_id' to the 'ids' array\r",
+							"        }\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"// Store the array of ids as a JSON string\r",
+							"pm.environment.set(\"tweetids\", JSON.stringify(ids));\r",
+							"\r",
+							"// Check if 'ids' is an array and has elements\r",
+							"if (Array.isArray(ids) && ids.length > 0) {\r",
+							"    // Select a random index\r",
+							"    var randomIndex = Math.floor(Math.random() * ids.length);\r",
+							"\r",
+							"    // Get the ID at the random index\r",
+							"    var randomId = ids[randomIndex];\r",
+							"\r",
+							"    // Store the randomly selected ID in a global variable\r",
+							"    pm.environment.set(\"randomTweetId\", randomId);\r",
+							"    //console.log(randomId);\r",
+							"} else {\r",
+							"    console.log(\"No IDs available to select, or IDs are not in the expected format\");\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/tweets",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"tweets"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "tweets",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/tweets",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"tweets"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 19 Nov 2023 07:07:27 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1p PHP/8.1.10"
+						},
+						{
+							"key": "Vary",
+							"value": "Authorization"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.10"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "57"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"_id\": \"6559ae3bcff3bbaea20470c2\",\n            \"user_id\": \"6559a807cff3bbaea20470c1\",\n            \"tweet\": \"This is an example tweet!\",\n            \"created_at\": \"2023-11-19T06:42:03.804000Z\",\n            \"user\": {\n                \"_id\": \"6559a807cff3bbaea20470c1\",\n                \"name\": \"Zawadul Kawum\",\n                \"email\": \"zawad1992@gmail.com\"\n            }\n        },\n        {\n            \"_id\": \"6559ae3ecff3bbaea20470c3\",\n            \"user_id\": \"6559a807cff3bbaea20470c1\",\n            \"tweet\": \"This is an example tweet!\",\n            \"created_at\": \"2023-11-19T06:42:06.136000Z\",\n            \"user\": {\n                \"_id\": \"6559a807cff3bbaea20470c1\",\n                \"name\": \"Zawadul Kawum\",\n                \"email\": \"zawad1992@gmail.com\"\n            }\n        },\n        {\n            \"_id\": \"6559ae3fcff3bbaea20470c4\",\n            \"user_id\": \"6559a807cff3bbaea20470c1\",\n            \"tweet\": \"This is an example tweet!\",\n            \"created_at\": \"2023-11-19T06:42:07.393000Z\",\n            \"user\": {\n                \"_id\": \"6559a807cff3bbaea20470c1\",\n                \"name\": \"Zawadul Kawum\",\n                \"email\": \"zawad1992@gmail.com\"\n            }\n        },\n        {\n            \"_id\": \"6559ae40cff3bbaea20470c5\",\n            \"user_id\": \"6559a807cff3bbaea20470c1\",\n            \"tweet\": \"This is an example tweet!\",\n            \"created_at\": \"2023-11-19T06:42:08.529000Z\",\n            \"user\": {\n                \"_id\": \"6559a807cff3bbaea20470c1\",\n                \"name\": \"Zawadul Kawum\",\n                \"email\": \"zawad1992@gmail.com\"\n            }\n        },\n        {\n            \"_id\": \"6559ae41cff3bbaea20470c6\",\n            \"user_id\": \"6559a807cff3bbaea20470c1\",\n            \"tweet\": \"This is an example tweet!\",\n            \"created_at\": \"2023-11-19T06:42:09.630000Z\",\n            \"user\": {\n                \"_id\": \"6559a807cff3bbaea20470c1\",\n                \"name\": \"Zawadul Kawum\",\n                \"email\": \"zawad1992@gmail.com\"\n            }\n        },\n        {\n            \"_id\": \"6559ae43cff3bbaea20470c7\",\n            \"user_id\": \"6559a807cff3bbaea20470c1\",\n            \"tweet\": \"This is an example tweet!\",\n            \"created_at\": \"2023-11-19T06:42:11.438000Z\",\n            \"user\": {\n                \"_id\": \"6559a807cff3bbaea20470c1\",\n                \"name\": \"Zawadul Kawum\",\n                \"email\": \"zawad1992@gmail.com\"\n            }\n        },\n        {\n            \"_id\": \"6559ae44cff3bbaea20470c8\",\n            \"user_id\": \"6559a807cff3bbaea20470c1\",\n            \"tweet\": \"This is an example tweet!\",\n            \"created_at\": \"2023-11-19T06:42:12.436000Z\",\n            \"user\": {\n                \"_id\": \"6559a807cff3bbaea20470c1\",\n                \"name\": \"Zawadul Kawum\",\n                \"email\": \"zawad1992@gmail.com\"\n            }\n        },\n        {\n            \"_id\": \"6559ae57cff3bbaea20470c9\",\n            \"user_id\": \"6559a807cff3bbaea20470c1\",\n            \"tweet\": \"This is an example tweet!\",\n            \"created_at\": \"2023-11-19T06:42:31.704000Z\",\n            \"user\": {\n                \"_id\": \"6559a807cff3bbaea20470c1\",\n                \"name\": \"Zawadul Kawum\",\n                \"email\": \"zawad1992@gmail.com\"\n            }\n        },\n        {\n            \"_id\": \"6559ae5ccff3bbaea20470ca\",\n            \"user_id\": \"6559a807cff3bbaea20470c1\",\n            \"tweet\": \"This is an example tweet!\",\n            \"created_at\": \"2023-11-19T06:42:36.195000Z\",\n            \"user\": {\n                \"_id\": \"6559a807cff3bbaea20470c1\",\n                \"name\": \"Zawadul Kawum\",\n                \"email\": \"zawad1992@gmail.com\"\n            }\n        },\n        {\n            \"_id\": \"6559ae63cff3bbaea20470cb\",\n            \"user_id\": \"6559a807cff3bbaea20470c1\",\n            \"tweet\": \"This is an example tweet!\",\n            \"created_at\": \"2023-11-19T06:42:43.999000Z\",\n            \"user\": {\n                \"_id\": \"6559a807cff3bbaea20470c1\",\n                \"name\": \"Zawadul Kawum\",\n                \"email\": \"zawad1992@gmail.com\"\n            }\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "tweet by id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/tweets/{{randomTweetId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"tweets",
+						"{{randomTweetId}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "tweet by id",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/tweets/6559ae5ccff3bbaea20470ca",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"tweets",
+								"6559ae5ccff3bbaea20470ca"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 19 Nov 2023 07:11:10 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1p PHP/8.1.10"
+						},
+						{
+							"key": "Vary",
+							"value": "Authorization"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.10"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "59"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"_id\": \"6559ae5ccff3bbaea20470ca\",\n        \"user_id\": \"6559a807cff3bbaea20470c1\",\n        \"tweet\": \"This is an example tweet!\",\n        \"created_at\": \"2023-11-19T06:42:36.195000Z\",\n        \"user\": {\n            \"_id\": \"6559a807cff3bbaea20470c1\",\n            \"name\": \"Zawadul Kawum\",\n            \"email\": \"zawad1992@gmail.com\"\n        }\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "tweet by id edit",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user_id\": \"{{userId}}\",\r\n    \"tweet\": \"{{$randomLoremSentences}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/tweets/{{randomTweetId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"tweets",
+						"{{randomTweetId}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "tweet by id",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/tweets/6559ae5ccff3bbaea20470ca",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"tweets",
+								"6559ae5ccff3bbaea20470ca"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 19 Nov 2023 07:11:10 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1p PHP/8.1.10"
+						},
+						{
+							"key": "Vary",
+							"value": "Authorization"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.10"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "59"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"_id\": \"6559ae5ccff3bbaea20470ca\",\n        \"user_id\": \"6559a807cff3bbaea20470c1\",\n        \"tweet\": \"This is an example tweet!\",\n        \"created_at\": \"2023-11-19T06:42:36.195000Z\",\n        \"user\": {\n            \"_id\": \"6559a807cff3bbaea20470c1\",\n            \"name\": \"Zawadul Kawum\",\n            \"email\": \"zawad1992@gmail.com\"\n        }\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "tweet by id delete",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user_id\": \"{{userId}}\",\r\n    \"tweet\": \"{{$randomLoremSentences}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/tweets/{{randomTweetId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"tweets",
+						"{{randomTweetId}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "tweet by id",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/tweets/6559ae5ccff3bbaea20470ca",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"tweets",
+								"6559ae5ccff3bbaea20470ca"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 19 Nov 2023 07:11:10 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1p PHP/8.1.10"
+						},
+						{
+							"key": "Vary",
+							"value": "Authorization"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.10"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "59"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"_id\": \"6559ae5ccff3bbaea20470ca\",\n        \"user_id\": \"6559a807cff3bbaea20470c1\",\n        \"tweet\": \"This is an example tweet!\",\n        \"created_at\": \"2023-11-19T06:42:36.195000Z\",\n        \"user\": {\n            \"_id\": \"6559a807cff3bbaea20470c1\",\n            \"name\": \"Zawadul Kawum\",\n            \"email\": \"zawad1992@gmail.com\"\n        }\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseData = pm.response.json();\r",
+							"var ids = [];\r",
+							"\r",
+							"// Check if 'data' exists and is an array\r",
+							"if (responseData.data && Array.isArray(responseData.data)) {\r",
+							"    // Iterate over each element in the 'data' array\r",
+							"    responseData.data.forEach(item => {\r",
+							"        if (item._id) {\r",
+							"            ids.push(item._id); // Add the '_id' to the 'ids' array\r",
+							"        }\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"// Store the array of ids as a JSON string\r",
+							"pm.environment.set(\"userids\", JSON.stringify(ids));\r",
+							"\r",
+							"// Check if 'ids' is an array and has elements\r",
+							"if (Array.isArray(ids) && ids.length > 0) {\r",
+							"    // Select a random index\r",
+							"    var randomIndex = Math.floor(Math.random() * ids.length);\r",
+							"\r",
+							"    // Get the ID at the random index\r",
+							"    var randomId = ids[randomIndex];\r",
+							"\r",
+							"    // Store the randomly selected ID in a global variable\r",
+							"    pm.environment.set(\"randomFollowerId\", randomId);\r",
+							"    //console.log(randomId);\r",
+							"} else {\r",
+							"    console.log(\"No Follower IDs available to select, or IDs are not in the expected format\");\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/users/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "users",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/users/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 19 Nov 2023 09:56:59 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1p PHP/8.1.10"
+						},
+						{
+							"key": "Vary",
+							"value": "Authorization"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.10"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "54"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=98"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"_id\": \"6559a24acff3bbaea20470bf\",\n            \"name\": \"Brandi Raynor\",\n            \"email\": \"Norris63@example.org\",\n            \"created_at\": \"2023-11-19T05:51:06.889000Z\"\n        },\n        {\n            \"_id\": \"6559a5dacff3bbaea20470c0\",\n            \"name\": \"Madisen Schmidt\",\n            \"email\": \"madisen.schmidt@example.com\",\n            \"created_at\": \"2023-11-19T06:06:18.984000Z\"\n        },\n        {\n            \"_id\": \"6559a807cff3bbaea20470c1\",\n            \"name\": \"Zawadul Kawum\",\n            \"email\": \"zawad1992@gmail.com\",\n            \"created_at\": \"2023-11-19T06:15:35.693000Z\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "followers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/followers/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"followers",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "followers",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/followers/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"followers",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 19 Nov 2023 09:44:25 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1p PHP/8.1.10"
+						},
+						{
+							"key": "Vary",
+							"value": "Authorization"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.10"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "53"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=99"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"_id\": \"6559d885cff3bbaea20470d0\",\n            \"followed_id\": \"6559a807cff3bbaea20470c1\",\n            \"follower_id\": \"6559a807cff3bbaea20470c1\",\n            \"created_at\": \"2023-11-19T09:42:29.194000Z\",\n            \"follower\": {\n                \"_id\": \"6559a807cff3bbaea20470c1\",\n                \"name\": \"Zawadul Kawum\",\n                \"email\": \"zawad1992@gmail.com\"\n            },\n            \"followed\": {\n                \"_id\": \"6559a807cff3bbaea20470c1\",\n                \"name\": \"Zawadul Kawum\",\n                \"email\": \"zawad1992@gmail.com\"\n            }\n        },\n        {\n            \"_id\": \"6559d8a0cff3bbaea20470d1\",\n            \"followed_id\": \"6559a24acff3bbaea20470bf\",\n            \"follower_id\": \"6559a807cff3bbaea20470c1\",\n            \"created_at\": \"2023-11-19T09:42:56.122000Z\",\n            \"follower\": {\n                \"_id\": \"6559a807cff3bbaea20470c1\",\n                \"name\": \"Zawadul Kawum\",\n                \"email\": \"zawad1992@gmail.com\"\n            },\n            \"followed\": {\n                \"_id\": \"6559a24acff3bbaea20470bf\",\n                \"name\": \"Brandi Raynor\",\n                \"email\": \"Norris63@example.org\"\n            }\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "followers by id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/followers/{{randomFollowerId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"followers",
+						"{{randomFollowerId}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "followers by id",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/followers/{{randomFollowerId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"followers",
+								"{{randomFollowerId}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 19 Nov 2023 09:57:07 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1p PHP/8.1.10"
+						},
+						{
+							"key": "Vary",
+							"value": "Authorization"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.10"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "52"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=96"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"_id\": \"6559dbefcff3bbaea20470d3\",\n            \"followed_id\": \"6559a5dacff3bbaea20470c0\",\n            \"follower_id\": \"6559a807cff3bbaea20470c1\",\n            \"created_at\": \"2023-11-19T09:57:03.607000Z\",\n            \"follower\": {\n                \"_id\": \"6559a807cff3bbaea20470c1\",\n                \"name\": \"Zawadul Kawum\",\n                \"email\": \"zawad1992@gmail.com\"\n            },\n            \"followed\": {\n                \"_id\": \"6559a5dacff3bbaea20470c0\",\n                \"name\": \"Madisen Schmidt\",\n                \"email\": \"madisen.schmidt@example.com\"\n            }\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "follow",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user_id\": \"{{userId}}\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/follow/{{randomFollowerId}}/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"follow",
+						"{{randomFollowerId}}",
+						"1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "follow",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\": \"{{userId}}\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/follow/{{randomFollowerId}}/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"follow",
+								"{{randomFollowerId}}",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 19 Nov 2023 09:57:03 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1p PHP/8.1.10"
+						},
+						{
+							"key": "Vary",
+							"value": "Authorization"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.10"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "53"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=97"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"message\": \"Followed\"\n}"
+				},
+				{
+					"name": "follow already",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\": \"{{userId}}\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/follow/{{randomFollowerId}}/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"follow",
+								"{{randomFollowerId}}",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 19 Nov 2023 09:58:34 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1p PHP/8.1.10"
+						},
+						{
+							"key": "Vary",
+							"value": "Authorization"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.10"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "59"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"error\",\n    \"message\": \"Already following\"\n}"
+				}
+			]
+		},
+		{
+			"name": "unfollow",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user_id\": \"{{userId}}\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/follow/{{randomFollowerId}}/0",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"follow",
+						"{{randomFollowerId}}",
+						"0"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "unfollow",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\": \"{{userId}}\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/follow/{{randomFollowerId}}/0",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"follow",
+								"{{randomFollowerId}}",
+								"0"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 19 Nov 2023 09:56:18 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1p PHP/8.1.10"
+						},
+						{
+							"key": "Vary",
+							"value": "Authorization"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.10"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "54"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=98"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"deleted\",\n    \"message\": \"Unfollowed\"\n}"
+				},
+				{
+					"name": "not following",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\": \"{{userId}}\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/follow/{{randomFollowerId}}/0",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"follow",
+								"{{randomFollowerId}}",
+								"0"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 19 Nov 2023 09:58:59 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1p PHP/8.1.10"
+						},
+						{
+							"key": "Vary",
+							"value": "Authorization"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.10"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "57"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=99"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"error\",\n    \"message\": \"Not following\"\n}"
+				}
+			]
+		},
+		{
+			"name": "likes",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/likes",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"likes"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "likes",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/likes",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"likes"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 19 Nov 2023 10:15:34 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1p PHP/8.1.10"
+						},
+						{
+							"key": "Vary",
+							"value": "Authorization"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.10"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "59"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"_id\": \"6559df49cff3bbaea20470d6\",\n            \"user_id\": \"6559a807cff3bbaea20470c1\",\n            \"tweet_id\": \"6559d4f1cff3bbaea20470ce\",\n            \"created_at\": \"2023-11-19T10:11:21.967000Z\",\n            \"user\": {\n                \"_id\": \"6559a807cff3bbaea20470c1\",\n                \"name\": \"Zawadul Kawum\",\n                \"email\": \"zawad1992@gmail.com\"\n            },\n            \"tweet\": {\n                \"_id\": \"6559d4f1cff3bbaea20470ce\",\n                \"tweet\": \"This is an example tweet!\"\n            }\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "like by id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/likes/{{randomTweetId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"likes",
+						"{{randomTweetId}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "like by id",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/likes/{{randomTweetId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"likes",
+								"{{randomTweetId}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 19 Nov 2023 10:17:15 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1p PHP/8.1.10"
+						},
+						{
+							"key": "Vary",
+							"value": "Authorization"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.10"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "59"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"_id\": \"6559df49cff3bbaea20470d6\",\n            \"user_id\": \"6559a807cff3bbaea20470c1\",\n            \"tweet_id\": \"6559d4f1cff3bbaea20470ce\",\n            \"created_at\": \"2023-11-19T10:11:21.967000Z\",\n            \"user\": {\n                \"_id\": \"6559a807cff3bbaea20470c1\",\n                \"name\": \"Zawadul Kawum\",\n                \"email\": \"zawad1992@gmail.com\"\n            },\n            \"tweet\": {\n                \"_id\": \"6559d4f1cff3bbaea20470ce\",\n                \"tweet\": \"This is an example tweet!\"\n            }\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "like",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user_id\": \"{{userId}}\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/like/{{randomTweetId}}/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"like",
+						"{{randomTweetId}}",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "unlike",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user_id\": \"{{userId}}\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/like/{{randomTweetId}}/0",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"like",
+						"{{randomTweetId}}",
+						"0"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "unfollow",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\": \"{{userId}}\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/follow/{{randomFollowerId}}/0",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"follow",
+								"{{randomFollowerId}}",
+								"0"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 19 Nov 2023 09:56:18 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1p PHP/8.1.10"
+						},
+						{
+							"key": "Vary",
+							"value": "Authorization"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.10"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "54"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=98"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"deleted\",\n    \"message\": \"Unfollowed\"\n}"
+				},
+				{
+					"name": "not following",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\": \"{{userId}}\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/follow/{{randomFollowerId}}/0",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"follow",
+								"{{randomFollowerId}}",
+								"0"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 19 Nov 2023 09:58:59 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1p PHP/8.1.10"
+						},
+						{
+							"key": "Vary",
+							"value": "Authorization"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.10"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "57"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=99"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"error\",\n    \"message\": \"Not following\"\n}"
+				}
+			]
+		}
+	]
+}
