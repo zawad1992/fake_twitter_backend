@@ -6,7 +6,24 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TweetsController;
 
+use Illuminate\Support\Facades\DB;
+
 // Public routes
+Route::get('/health', function () {
+    return 'ok';
+});
+
+Route::get('/ping', function (Request $request) {    
+    $connection = DB::connection('mongodb');
+    $msg = 'MongoDB is accessible!';
+    try {  
+        $connection->command(['ping' => 1]);  
+    } catch (\Exception $e) {  
+        $msg = 'MongoDB is not accessible. Error: ' . $e->getMessage();
+    }
+    return ['msg' => $msg];
+});
+
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 
