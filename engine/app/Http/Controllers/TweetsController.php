@@ -12,7 +12,14 @@ class TweetsController extends Controller
     {
         try {
             $tweetModel = new Tweet();
-            $dataObj = $tweetModel->all();
+            $dataObj = $tweetModel
+                            ->select('_id','user_id','tweet','created_at')
+                            ->with([
+                                'user'=>function ($query) {
+                                    $query->select('name','email');
+                                }
+                            ])
+                            ->get();
             return response()->json([
                 'status' => 'success',
                 'data' => $dataObj,
@@ -46,7 +53,15 @@ class TweetsController extends Controller
     {
         try {
             $tweetModel = new Tweet();
-            $dataObj = $tweetModel->find($id);
+            $dataObj = $tweetModel
+                            ->select('_id','user_id','tweet','created_at')
+                            ->with([
+                                'user'=>function ($query) {
+                                    $query->select('name','email');
+                                }
+                            ])
+                            ->where('_id', $id)
+                            ->first();
             return response()->json([
                 'status' => 'success',
                 'data' => $dataObj,
@@ -58,6 +73,7 @@ class TweetsController extends Controller
             ], 500);
         }
     }
+    
     public function update(Request $request, $id)
     {
         try {
@@ -128,6 +144,4 @@ class TweetsController extends Controller
             ], 500);
         }
     }
-    
-
 }
