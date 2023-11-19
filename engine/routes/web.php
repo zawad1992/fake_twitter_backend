@@ -30,6 +30,11 @@ Route::get('/ping', function (Request $request) {
     return ['msg' => $msg];
 });
 
+Route::get('/unauthorized', function (Request $request) {
+    return response()->json(['message' => 'Unauthorized'], 401);
+})->name('unauthorized');
+
+
 Route::get('/create_eloquent_mongo/', function (Request $request) {
     $success = CustomerMongoDB::create([
     'guid'=> 'cust_1111',
@@ -38,5 +43,5 @@ Route::get('/create_eloquent_mongo/', function (Request $request) {
     'email' => 'j.doe@gmail.com',
     'address' => '123 my street, my city, zip, state, country'
     ]);
-
 });
+

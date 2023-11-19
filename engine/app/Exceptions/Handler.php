@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use PHPOpenSourceSaver\JWTAuth\Exceptions\TokenInvalidException; // Import JWT Exception
 
 class Handler extends ExceptionHandler
 {
@@ -26,6 +27,18 @@ class Handler extends ExceptionHandler
         'password',
         'password_confirmation',
     ];
+
+    public function render($request, Throwable $exception)
+    {
+        // Check for JWT Token Invalid Exception
+        if ($exception instanceof TokenInvalidException) {
+            return response()->json(['error' => 'Invalid token provided'], 500);
+        }
+
+        // Add any other custom exception handling here
+
+        return parent::render($request, $exception);
+    }
 
     /**
      * Register the exception handling callbacks for the application.
