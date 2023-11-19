@@ -1,64 +1,56 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# FakeTwitter API Postman Collection
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This repository contains the Postman collection for interacting with the FakeTwitter API. The FakeTwitter API simulates a microblogging service, allowing for actions such as user registration, posting tweets, liking and unliking tweets, following and unfollowing users, and more.
 
-## About Laravel
+## Getting Started
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+To utilize this Postman collection, follow these steps:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Prerequisites
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Postman**: Install [Postman](https://www.postman.com/downloads/) on your system.
+- **FakeTwitter API**: Ensure the FakeTwitter API server is running and accessible.
 
-## Learning Laravel
+### Importing the Collection
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1. Download the Postman collection from [here](https://errorpoint.com/FakeTwitter.postman_collection.json).
+2. Open Postman.
+3. Click `Import` in the top left corner.
+4. Select or drag and drop the downloaded JSON file into Postman.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Collection Overview
 
-## Laravel Sponsors
+The collection includes various requests to interact with the FakeTwitter API:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+- **Health Check**: Verify if the API server is operational.
+- **Database Health**: Check the MongoDB connection status.
+- **User Registration**: Register new users.
+- **User Login**: Authenticate users and return tokens.
+- **Token Refresh**: Refresh authentication tokens.
+- **Post Tweet**: Allow users to post tweets.
+- **View Tweets**: Retrieve a list of tweets.
+- **View Tweet by ID**: Fetch a specific tweet using its ID.
+- **Like Tweet**: Like a tweet as a user.
+- **Unlike Tweet**: Remove a like from a tweet.
+- **Follow User**: Follow another user's account.
+- **Unfollow User**: Unfollow a user.
 
-### Premium Partners
+## Using the Collection
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+To use the collection:
+
+1. Select a request.
+2. Adjust request parameters as necessary.
+3. Send the request to interact with the API.
+
+## Environment Variables
+
+Set variables like `{{base_url}}`, `{{userId}}`, and `{{authToken}}` in your Postman environment for the collection to function correctly.
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Contributions are welcome. Please review our contributing guidelines for more information.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This collection is under the MIT License. Refer to the [LICENSE](LICENSE) file for details.
