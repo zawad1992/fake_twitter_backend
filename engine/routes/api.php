@@ -33,6 +33,10 @@ Route::post('/register', [AuthController::class, 'register']);
 
 // Protected routes
 Route::group(['middleware' => ['auth:api']], function () {
+    Route::get('/authcheck', function () {
+        return 'ok';
+    });
+
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
     
