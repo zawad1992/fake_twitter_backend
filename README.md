@@ -1,52 +1,74 @@
-# FakeTwitter API Postman Collection
+# README.md for FakeTwitter Postman Collection
 
-This repository contains the Postman collection for interacting with the FakeTwitter API. The FakeTwitter API allows you to perform various actions similar to a microblogging service, such as user registration, login, tweeting, and more.
+## Overview
+This README document provides an overview and instructions for the FakeTwitter Postman collection. The collection is designed to interact with a mock Twitter-like API.
 
-## Getting Started
+### Collection ID
+- **ID**: `14cb3b22-992d-4f48-893f-543c822cc172`
 
-To get started with using this Postman collection, follow these steps:
+### Schema
+- **Schema Version**: `v2.1.0`
+- **Schema URL**: [Postman Schema](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
 
-### Prerequisites
+## Endpoints
+The collection consists of various endpoints to simulate a social media platform's functionality.
 
-- Postman: Ensure you have [Postman](https://www.postman.com/downloads/) installed on your system.
-- FakeTwitter API: This collection is intended to be used with the FakeTwitter API. Make sure the API server is running and accessible.
+### Health Check
+- **Endpoint**: `GET {{base_url}}/api/health`
+- **Description**: Checks the health of the system. Returns `ok` if the system is functioning.
 
-### Importing the Collection
+### Database Health Check
+- **Endpoint**: `GET {{base_url}}/api/ping`
+- **Description**: Checks the database connection. Returns `MongoDB is accessible!` if the connection is okay.
 
-1. Download the Postman collection from [here](https://errorpoint.com/FakeTwitter.postman_collection.json).
-2. Open Postman.
-3. Click on `Import` in the top left corner.
-4. Choose the downloaded JSON file or drag and drop it into Postman.
+### User Registration
+- **Endpoint**: `POST {{base_url}}/api/register`
+- **Description**: Registers a new user. Generates a random name and email for registration.
 
-## Collection Overview
+### User Login
+- **Endpoint**: `POST {{base_url}}/api/login`
+- **Description**: Authenticates a user and provides a token for authorized requests.
 
-The collection includes various requests to interact with the FakeTwitter API. Here's an overview of the available requests:
+### Token Refresh
+- **Endpoint**: `POST {{base_url}}/api/refresh`
+- **Description**: Refreshes the authentication token for a user.
 
-- **Health Check**: Verifies if the API server is running.
-- **Database Health**: Checks the MongoDB connection status.
-- **User Registration**: Registers a new user.
-- **User Login**: Authenticates a user and returns a token.
-- **Token Refresh**: Refreshes the authentication token.
-- **Post Tweet**: Allows a user to post a tweet.
-- **View Tweets**: Retrieves a list of tweets.
-- **View Tweet by ID**: Retrieves a specific tweet by its ID.
+### Tweet Operations
+- **Create Tweet**: `POST {{base_url}}/api/tweets`
+- **Retrieve Tweets**: `GET {{base_url}}/api/tweets`
+- **Retrieve Tweets by User ID**: `GET {{base_url}}/api/tweets/{{userId}}`
+- **Retrieve, Edit, Delete Tweet by ID**: 
+  - `GET {{base_url}}/api/tweets/{{randomTweetId}}`
+  - `PUT {{base_url}}/api/tweets/{{randomTweetId}}`
+  - `DELETE {{base_url}}/api/tweets/{{randomTweetId}}`
 
-## Using the Collection
+### User Operations
+- **Retrieve Users**: `GET {{base_url}}/api/users/`
+- **Retrieve User by ID**: `GET {{base_url}}/api/users/{{userId}}`
 
-To use the collection:
+### Follower Operations
+- **Retrieve Followers**: `GET {{base_url}}/api/followers/`
+- **Retrieve Followers by ID**: `GET {{base_url}}/api/followers/{{randomFollowerId}}`
+- **Follow/Unfollow User**: 
+  - `POST {{base_url}}/api/follow/{{randomFollowerId}}/1` (Follow)
+  - `POST {{base_url}}/api/follow/{{randomFollowerId}}/0` (Unfollow)
 
-1. Select a request from the collection.
-2. Modify the request parameters as needed.
-3. Send the request to interact with the FakeTwitter API.
+### Like Operations
+- **Retrieve Likes**: `GET {{base_url}}/api/likes`
+- **Retrieve Likes by Tweet ID**: `GET {{base_url}}/api/likes/{{randomTweetId}}`
+- **Like/Unlike Tweet**: 
+  - `POST {{base_url}}/api/like/{{randomTweetId}}/1` (Like)
+  - `POST {{base_url}}/api/like/{{randomTweetId}}/0` (Unlike)
 
-## Environment Variables
+## Usage Instructions
+1. Import the collection JSON into Postman.
+2. Set up the `base_url` environment variable to point to the API server.
+3. Use the provided endpoints to interact with the API.
 
-The collection uses variables like `{{base_url}}`, `{{userId}}`, and `{{authToken}}`. Set these variables in your Postman environment for the collection to work correctly.
+## Notes
+- Some endpoints require authentication tokens. Ensure you're logged in to access these endpoints.
+- The collection includes pre-request and test scripts for dynamic data generation and response validation.
 
-## Contributing
+---
 
-Contributions to this collection are welcome. Please read our contributing guidelines for more information.
-
-## License
-
-This Postman collection is released under the MIT License. See the [LICENSE](LICENSE) file for more details.
+*This README is generated based on the provided Postman collection JSON for the FakeTwitter API.*
