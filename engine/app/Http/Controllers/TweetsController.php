@@ -5,13 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Tweet;
 use App\Models\Follower;
+use App\Models\User;
 
 class TweetsController extends Controller
 {
 
-    public function index()
+    public function index($userid=null)
     {
         try {
+            // Subquery to find the IDs of users followed by the given user
+            $followedUserIds = Follower::where('follower_id', $userid)->pluck('followed_id')->toArray();
+
             $tweetModel = new Tweet();
             $dataObj = $tweetModel
                             ->select('_id','user_id','tweet','created_at')
@@ -20,6 +24,13 @@ class TweetsController extends Controller
                                     $query->select('name','email');
                                 }
                             ])
+                            ->has('user'); // Ensure the tweet has an associated user
+
+            if (!empty($userid)) {
+                $dataObj = $dataObj->whereIn('user_id', $followedUserIds);
+            }
+
+            $dataObj = $dataObj
                             ->orderBy('created_at', 'desc')
                             ->paginate(5); // paginate with 5 items per page
 
@@ -61,29 +72,42 @@ class TweetsController extends Controller
         }        
     }
 
-    public function trandingTweets($userid = null)
+    public function trandingTweets($userid = null, Request $request)
     {
         try {
-            // Subquery to find the IDs of users followed by the given user
-            $followedUserIds = Follower::where('follower_id', $userid)->pluck('followed_id')->toArray();
-
+            $search = $request->search;
             $tweetModel = new Tweet();
-            $dataObj = $tweetModel
-                            ->select('_id', 'user_id', 'tweet', 'created_at')
-                            ->with([
-                                'user' => function ($query) {
-                                    $query->select('name', 'email');
-                                }
-                            ])
-                            ->where('user_id','<>',$userid)
-                            ->whereNotIn('user_id', $followedUserIds)
-                            ->orderBy('created_at', 'desc')
-                            ->limit(5)
-                            ->get(); // Get top 5 trending tweets
+
+            // Base query
+            $query = $tweetModel
+                        ->select('_id', 'user_id', 'tweet', 'created_at')
+                        ->with(['user' => function ($query) {
+                            $query->select('name', 'email');
+                        }])
+                        ->has('user') // Ensure the tweet has an associated user
+                        ->where('user_id', '<>', $userid)
+                        ->whereNotNull('user_id') // Exclude tweets where user_id is null
+                        ->whereNotNull('tweet'); // Exclude tweets where tweet is null
+
+            if (!empty($search)) {
+                // Fetch tweets based on email search
+                $userIds = User::where('email', 'LIKE', "%$search%")->orWhere('name', 'LIKE', "%$search%")->pluck('_id')->toArray();
+                $followedUserIds = Follower::where('follower_id', $userid)->pluck('followed_id')->toArray();
+                $query = $query->whereIn('user_id', $userIds);
+            } else {
+                // Fetch tweets not from followed users
+                $followedUserIds = Follower::where('follower_id', $userid)->pluck('followed_id')->toArray();
+                $query = $query->whereNotIn('user_id', $followedUserIds);
+            }
+
+            $dataObj = $query->orderBy('created_at', 'desc')
+                            ->limit(10)
+                            ->get(); // Get top 10 trending tweets
 
             return response()->json([
                 'status' => 'success',
                 'data' => $dataObj,
+                'followedUserIds' => $followedUserIds,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
@@ -92,6 +116,8 @@ class TweetsController extends Controller
             ], 500);
         }        
     }
+
+
 
     public function store(Request $request)
     {
