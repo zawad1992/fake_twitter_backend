@@ -19,6 +19,7 @@ class TweetsController extends Controller
                                     $query->select('name','email');
                                 }
                             ])
+                            ->orderBy('created_at', 'desc')
                             ->get();
             return response()->json([
                 'status' => 'success',
@@ -44,6 +45,7 @@ class TweetsController extends Controller
                                 }
                             ])
                             ->where('user_id', $userid)
+                            ->orderBy('created_at', 'desc')
                             ->get();
             return response()->json([
                 'status' => 'success',
