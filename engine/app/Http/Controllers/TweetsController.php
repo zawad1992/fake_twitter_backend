@@ -22,6 +22,9 @@ class TweetsController extends Controller
                             ->with([
                                 'user'=>function ($query) {
                                     $query->select('name','email');
+                                },
+                                'likes' => function ($query) {
+                                    $query->select('user_id','tweet_id');
                                 }
                             ])
                             ->has('user'); // Ensure the tweet has an associated user
@@ -55,6 +58,9 @@ class TweetsController extends Controller
                             ->with([
                                 'user'=>function ($query) {
                                     $query->select('name','email');
+                                },
+                                'likes' => function ($query) {
+                                    $query->select('user_id','tweet_id');
                                 }
                             ])
                             ->where('user_id', $userid)
