@@ -1,5 +1,3 @@
-# README.md for FakeTwitter Postman Collection
-
 ## Overview
 This README document provides an overview and instructions for the FakeTwitter Postman collection. The collection is designed to interact with a mock Twitter-like API.
 
