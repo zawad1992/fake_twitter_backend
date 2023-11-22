@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\CustomerMongoDB;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,15 +32,3 @@ Route::get('/ping', function (Request $request) {
 Route::get('/unauthorized', function (Request $request) {
     return response()->json(['message' => 'Unauthorized'], 401);
 })->name('unauthorized');
-
-
-Route::get('/create_eloquent_mongo/', function (Request $request) {
-    $success = CustomerMongoDB::create([
-    'guid'=> 'cust_1111',
-    'first_name'=> 'John',
-    'family_name' => 'Doe',
-    'email' => 'j.doe@gmail.com',
-    'address' => '123 my street, my city, zip, state, country'
-    ]);
-});
-
