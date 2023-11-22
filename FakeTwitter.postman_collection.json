@@ -23,7 +23,76 @@
 				},
 				"description": "Health Check API. If you get \\`**ok\\`** response then the system if functioning."
 			},
-			"response": []
+			"response": [
+				{
+					"name": "health",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/health",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"health"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "html",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Wed, 22 Nov 2023 18:25:28 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1p PHP/8.1.10"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.10"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "59"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/html; charset=UTF-8"
+						}
+					],
+					"cookie": [],
+					"body": "ok"
+				}
+			]
 		},
 		{
 			"name": "db health",
@@ -526,7 +595,7 @@
 					"header": [
 						{
 							"key": "Date",
-							"value": "Sun, 19 Nov 2023 06:20:52 GMT"
+							"value": "Wed, 22 Nov 2023 18:27:30 GMT"
 						},
 						{
 							"key": "Server",
@@ -558,7 +627,7 @@
 						},
 						{
 							"key": "Keep-Alive",
-							"value": "timeout=5, max=99"
+							"value": "timeout=5, max=100"
 						},
 						{
 							"key": "Connection",
@@ -574,7 +643,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n    \"status\": \"success\",\n    \"user\": {\n        \"_id\": \"6559a807cff3bbaea20470c1\",\n        \"name\": \"Zawadul Kawum\",\n        \"email\": \"zawad1992@gmail.com\",\n        \"updated_at\": \"2023-11-19T06:15:35.693000Z\",\n        \"created_at\": \"2023-11-19T06:15:35.693000Z\"\n    },\n    \"authorisation\": {\n        \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0Ojg4ODgvTEFSQVZFTC9mYWtlX3R3aXR0ZXJfYmFja2VuZC9hcGkvcmVmcmVzaCIsImlhdCI6MTcwMDM3NDg0OSwiZXhwIjoxNzAwMzc4NDUyLCJuYmYiOjE3MDAzNzQ4NTIsImp0aSI6IlRFeFg3TlE2OFVoaEJBV2UiLCJzdWIiOiI2NTU5YTgwN2NmZjNiYmFlYTIwNDcwYzEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.ek8r-6QHTV4C9QMFtP6Hc34ApNWqSUIakRdaWFhUIRE\",\n        \"type\": \"bearer\"\n    }\n}"
+					"body": "{\n    \"status\": \"success\",\n    \"authorisation\": {\n        \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0Ojg4ODgvTEFSQVZFTC9mYWtlX3R3aXR0ZXJfYmFja2VuZC9hcGkvcmVmcmVzaCIsImlhdCI6MTcwMDY3NTQzNiwiZXhwIjoxNzAwNjgxMjUwLCJuYmYiOjE3MDA2Nzc2NTAsImp0aSI6ImRnR09BQmU4MkhITkJ4N1giLCJzdWIiOiI2NTU5YTgwN2NmZjNiYmFlYTIwNDcwYzEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.fPFey6gvynG1k6wDmhMMFaJDvnijomhaXkybegi5f8M\",\n        \"type\": \"bearer\"\n    }\n}"
 				}
 			]
 		},
@@ -615,18 +684,27 @@
 			},
 			"response": [
 				{
-					"name": "refresh",
+					"name": "tweets save",
 					"originalRequest": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\": \"{{userId}}\",\r\n    \"tweet\": \"{{$randomLoremSentences}}\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{base_url}}/api/refresh",
+							"raw": "{{base_url}}/api/tweets",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"api",
-								"refresh"
+								"tweets"
 							]
 						}
 					},
@@ -636,7 +714,7 @@
 					"header": [
 						{
 							"key": "Date",
-							"value": "Sun, 19 Nov 2023 06:20:52 GMT"
+							"value": "Wed, 22 Nov 2023 05:46:33 GMT"
 						},
 						{
 							"key": "Server",
@@ -660,7 +738,7 @@
 						},
 						{
 							"key": "X-RateLimit-Remaining",
-							"value": "58"
+							"value": "59"
 						},
 						{
 							"key": "Access-Control-Allow-Origin",
@@ -668,7 +746,7 @@
 						},
 						{
 							"key": "Keep-Alive",
-							"value": "timeout=5, max=99"
+							"value": "timeout=5, max=100"
 						},
 						{
 							"key": "Connection",
@@ -684,7 +762,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n    \"status\": \"success\",\n    \"user\": {\n        \"_id\": \"6559a807cff3bbaea20470c1\",\n        \"name\": \"Zawadul Kawum\",\n        \"email\": \"zawad1992@gmail.com\",\n        \"updated_at\": \"2023-11-19T06:15:35.693000Z\",\n        \"created_at\": \"2023-11-19T06:15:35.693000Z\"\n    },\n    \"authorisation\": {\n        \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0Ojg4ODgvTEFSQVZFTC9mYWtlX3R3aXR0ZXJfYmFja2VuZC9hcGkvcmVmcmVzaCIsImlhdCI6MTcwMDM3NDg0OSwiZXhwIjoxNzAwMzc4NDUyLCJuYmYiOjE3MDAzNzQ4NTIsImp0aSI6IlRFeFg3TlE2OFVoaEJBV2UiLCJzdWIiOiI2NTU5YTgwN2NmZjNiYmFlYTIwNDcwYzEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.ek8r-6QHTV4C9QMFtP6Hc34ApNWqSUIakRdaWFhUIRE\",\n        \"type\": \"bearer\"\n    }\n}"
+					"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"user_id\": \"6559a807cff3bbaea20470c1\",\n        \"tweet\": \"Sint laborum nesciunt quia qui. Qui tempore non perspiciatis distinctio aut dolores non et. Vel sed omnis ut in.\",\n        \"updated_at\": \"2023-11-22T05:46:33.200000Z\",\n        \"created_at\": \"2023-11-22T05:46:33.200000Z\",\n        \"_id\": \"655d95b9b5a41c5d8107a557\"\n    }\n}"
 				}
 			]
 		},
@@ -777,7 +855,411 @@
 					"header": [
 						{
 							"key": "Date",
-							"value": "Sun, 19 Nov 2023 07:07:27 GMT"
+							"value": "Wed, 22 Nov 2023 18:25:57 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1p PHP/8.1.10"
+						},
+						{
+							"key": "Vary",
+							"value": "Authorization"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.10"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "59"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=98"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"current_page\": 1,\n        \"data\": [\n            {\n                \"_id\": \"655e2b9cb5a41c5d8107a58b\",\n                \"user_id\": \"6559a807cff3bbaea20470c1\",\n                \"tweet\": \"I don't know\",\n                \"created_at\": \"2023-11-22T16:26:04.014000Z\",\n                \"user\": {\n                    \"_id\": \"6559a807cff3bbaea20470c1\",\n                    \"name\": \"Zawadul Kawum\",\n                    \"email\": \"zawad1992@gmail.com\"\n                },\n                \"likes\": []\n            },\n            {\n                \"_id\": \"655e07b4b5a41c5d8107a582\",\n                \"user_id\": \"655e07a4b5a41c5d8107a581\",\n                \"tweet\": \"Hi this is atel speaking\",\n                \"created_at\": \"2023-11-22T13:52:52.814000Z\",\n                \"user\": {\n                    \"_id\": \"655e07a4b5a41c5d8107a581\",\n                    \"name\": \"Zarif Atel\",\n                    \"email\": \"zatel@example.com\"\n                },\n                \"likes\": [\n                    {\n                        \"_id\": \"655e4608b5a41c5d8107a59c\",\n                        \"user_id\": \"6559a807cff3bbaea20470c1\",\n                        \"tweet_id\": \"655e07b4b5a41c5d8107a582\"\n                    }\n                ]\n            },\n            {\n                \"_id\": \"655df103b5a41c5d8107a580\",\n                \"user_id\": \"6559a807cff3bbaea20470c1\",\n                \"tweet\": \"Ok. How are you????\",\n                \"created_at\": \"2023-11-22T12:16:03.064000Z\",\n                \"user\": {\n                    \"_id\": \"6559a807cff3bbaea20470c1\",\n                    \"name\": \"Zawadul Kawum\",\n                    \"email\": \"zawad1992@gmail.com\"\n                },\n                \"likes\": []\n            },\n            {\n                \"_id\": \"655dd600b5a41c5d8107a57f\",\n                \"user_id\": \"655dce75b5a41c5d8107a57c\",\n                \"tweet\": \"dsfsdf\",\n                \"created_at\": \"2023-11-22T10:20:48.327000Z\",\n                \"user\": {\n                    \"_id\": \"655dce75b5a41c5d8107a57c\",\n                    \"name\": \"Jahidul\",\n                    \"email\": \"z@z.com\"\n                },\n                \"likes\": []\n            },\n            {\n                \"_id\": \"655dd5f9b5a41c5d8107a57e\",\n                \"user_id\": \"655dce75b5a41c5d8107a57c\",\n                \"tweet\": \"Sdsad\",\n                \"created_at\": \"2023-11-22T10:20:41.959000Z\",\n                \"user\": {\n                    \"_id\": \"655dce75b5a41c5d8107a57c\",\n                    \"name\": \"Jahidul\",\n                    \"email\": \"z@z.com\"\n                },\n                \"likes\": [\n                    {\n                        \"_id\": \"655e46ddb5a41c5d8107a5a1\",\n                        \"user_id\": \"6559a807cff3bbaea20470c1\",\n                        \"tweet_id\": \"655dd5f9b5a41c5d8107a57e\"\n                    }\n                ]\n            }\n        ],\n        \"first_page_url\": \"http://localhost:8888/LARAVEL/fake_twitter_backend/api/tweets?page=1\",\n        \"from\": 1,\n        \"last_page\": 11,\n        \"last_page_url\": \"http://localhost:8888/LARAVEL/fake_twitter_backend/api/tweets?page=11\",\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://localhost:8888/LARAVEL/fake_twitter_backend/api/tweets?page=1\",\n                \"label\": \"1\",\n                \"active\": true\n            },\n            {\n                \"url\": \"http://localhost:8888/LARAVEL/fake_twitter_backend/api/tweets?page=2\",\n                \"label\": \"2\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://localhost:8888/LARAVEL/fake_twitter_backend/api/tweets?page=3\",\n                \"label\": \"3\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://localhost:8888/LARAVEL/fake_twitter_backend/api/tweets?page=4\",\n                \"label\": \"4\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://localhost:8888/LARAVEL/fake_twitter_backend/api/tweets?page=5\",\n                \"label\": \"5\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://localhost:8888/LARAVEL/fake_twitter_backend/api/tweets?page=6\",\n                \"label\": \"6\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://localhost:8888/LARAVEL/fake_twitter_backend/api/tweets?page=7\",\n                \"label\": \"7\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://localhost:8888/LARAVEL/fake_twitter_backend/api/tweets?page=8\",\n                \"label\": \"8\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://localhost:8888/LARAVEL/fake_twitter_backend/api/tweets?page=9\",\n                \"label\": \"9\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://localhost:8888/LARAVEL/fake_twitter_backend/api/tweets?page=10\",\n                \"label\": \"10\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://localhost:8888/LARAVEL/fake_twitter_backend/api/tweets?page=11\",\n                \"label\": \"11\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://localhost:8888/LARAVEL/fake_twitter_backend/api/tweets?page=2\",\n                \"label\": \"Next &raquo;\",\n                \"active\": false\n            }\n        ],\n        \"next_page_url\": \"http://localhost:8888/LARAVEL/fake_twitter_backend/api/tweets?page=2\",\n        \"path\": \"http://localhost:8888/LARAVEL/fake_twitter_backend/api/tweets\",\n        \"per_page\": 5,\n        \"prev_page_url\": null,\n        \"to\": 5,\n        \"total\": 51\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "tweets by followerid",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseData = pm.response.json();\r",
+							"var ids = [];\r",
+							"\r",
+							"// Check if 'data' exists and is an array\r",
+							"if (responseData.data && Array.isArray(responseData.data)) {\r",
+							"    // Iterate over each element in the 'data' array\r",
+							"    responseData.data.forEach(item => {\r",
+							"        if (item._id) {\r",
+							"            ids.push(item._id); // Add the '_id' to the 'ids' array\r",
+							"        }\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"// Store the array of ids as a JSON string\r",
+							"pm.environment.set(\"tweetids\", JSON.stringify(ids));\r",
+							"\r",
+							"// Check if 'ids' is an array and has elements\r",
+							"if (Array.isArray(ids) && ids.length > 0) {\r",
+							"    // Select a random index\r",
+							"    var randomIndex = Math.floor(Math.random() * ids.length);\r",
+							"\r",
+							"    // Get the ID at the random index\r",
+							"    var randomId = ids[randomIndex];\r",
+							"\r",
+							"    // Store the randomly selected ID in a global variable\r",
+							"    pm.environment.set(\"randomTweetId\", randomId);\r",
+							"    //console.log(randomId);\r",
+							"} else {\r",
+							"    console.log(\"No IDs available to select, or IDs are not in the expected format\");\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/tweets/{{userId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"tweets",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "tweets by followerid",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/tweets/{{userId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"tweets",
+								"{{userId}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Wed, 22 Nov 2023 18:28:50 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1p PHP/8.1.10"
+						},
+						{
+							"key": "Vary",
+							"value": "Authorization"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.10"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "59"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"current_page\": 1,\n        \"data\": [\n            {\n                \"_id\": \"655dd600b5a41c5d8107a57f\",\n                \"user_id\": \"655dce75b5a41c5d8107a57c\",\n                \"tweet\": \"dsfsdf\",\n                \"created_at\": \"2023-11-22T10:20:48.327000Z\",\n                \"user\": {\n                    \"_id\": \"655dce75b5a41c5d8107a57c\",\n                    \"name\": \"Jahidul\",\n                    \"email\": \"z@z.com\"\n                },\n                \"likes\": []\n            },\n            {\n                \"_id\": \"655dd5f9b5a41c5d8107a57e\",\n                \"user_id\": \"655dce75b5a41c5d8107a57c\",\n                \"tweet\": \"Sdsad\",\n                \"created_at\": \"2023-11-22T10:20:41.959000Z\",\n                \"user\": {\n                    \"_id\": \"655dce75b5a41c5d8107a57c\",\n                    \"name\": \"Jahidul\",\n                    \"email\": \"z@z.com\"\n                },\n                \"likes\": [\n                    {\n                        \"_id\": \"655e46ddb5a41c5d8107a5a1\",\n                        \"user_id\": \"6559a807cff3bbaea20470c1\",\n                        \"tweet_id\": \"655dd5f9b5a41c5d8107a57e\"\n                    }\n                ]\n            },\n            {\n                \"_id\": \"655dce8db5a41c5d8107a57d\",\n                \"user_id\": \"655dce75b5a41c5d8107a57c\",\n                \"tweet\": \"Hi  this is hello\",\n                \"created_at\": \"2023-11-22T09:49:01.281000Z\",\n                \"user\": {\n                    \"_id\": \"655dce75b5a41c5d8107a57c\",\n                    \"name\": \"Jahidul\",\n                    \"email\": \"z@z.com\"\n                },\n                \"likes\": []\n            }\n        ],\n        \"first_page_url\": \"http://localhost:8888/LARAVEL/fake_twitter_backend/api/tweets/6559a807cff3bbaea20470c1?page=1\",\n        \"from\": 1,\n        \"last_page\": 1,\n        \"last_page_url\": \"http://localhost:8888/LARAVEL/fake_twitter_backend/api/tweets/6559a807cff3bbaea20470c1?page=1\",\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://localhost:8888/LARAVEL/fake_twitter_backend/api/tweets/6559a807cff3bbaea20470c1?page=1\",\n                \"label\": \"1\",\n                \"active\": true\n            },\n            {\n                \"url\": null,\n                \"label\": \"Next &raquo;\",\n                \"active\": false\n            }\n        ],\n        \"next_page_url\": null,\n        \"path\": \"http://localhost:8888/LARAVEL/fake_twitter_backend/api/tweets/6559a807cff3bbaea20470c1\",\n        \"per_page\": 5,\n        \"prev_page_url\": null,\n        \"to\": 3,\n        \"total\": 3\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "tweets tranding",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/tweets/tranding/{{userId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"tweets",
+						"tranding",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "tweets tranding",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/tweets/tranding/{{userId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"tweets",
+								"tranding",
+								"{{userId}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Wed, 22 Nov 2023 18:29:20 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1p PHP/8.1.10"
+						},
+						{
+							"key": "Vary",
+							"value": "Authorization"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.10"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "58"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"_id\": \"655e07b4b5a41c5d8107a582\",\n            \"user_id\": \"655e07a4b5a41c5d8107a581\",\n            \"tweet\": \"Hi this is atel speaking\",\n            \"created_at\": \"2023-11-22T13:52:52.814000Z\",\n            \"user\": {\n                \"_id\": \"655e07a4b5a41c5d8107a581\",\n                \"name\": \"Zarif Atel\",\n                \"email\": \"zatel@example.com\"\n            },\n            \"likes\": [\n                {\n                    \"_id\": \"655e4608b5a41c5d8107a59c\",\n                    \"user_id\": \"6559a807cff3bbaea20470c1\",\n                    \"tweet_id\": \"655e07b4b5a41c5d8107a582\"\n                }\n            ]\n        },\n        {\n            \"_id\": \"655dae18b5a41c5d8107a579\",\n            \"user_id\": \"655da3f6b5a41c5d8107a566\",\n            \"tweet\": \"Hii\",\n            \"created_at\": \"2023-11-22T07:30:32.913000Z\",\n            \"user\": {\n                \"_id\": \"655da3f6b5a41c5d8107a566\",\n                \"name\": \"Zawad Sikder\",\n                \"email\": \"zawad1992@hotmail.com\"\n            },\n            \"likes\": [\n                {\n                    \"_id\": \"655e46c6b5a41c5d8107a59d\",\n                    \"user_id\": \"6559a807cff3bbaea20470c1\",\n                    \"tweet_id\": \"655dae18b5a41c5d8107a579\"\n                }\n            ]\n        },\n        {\n            \"_id\": \"655da902b5a41c5d8107a578\",\n            \"user_id\": \"655da3f6b5a41c5d8107a566\",\n            \"tweet\": \"AB D\",\n            \"created_at\": \"2023-11-22T07:08:50.421000Z\",\n            \"user\": {\n                \"_id\": \"655da3f6b5a41c5d8107a566\",\n                \"name\": \"Zawad Sikder\",\n                \"email\": \"zawad1992@hotmail.com\"\n            },\n            \"likes\": [\n                {\n                    \"_id\": \"655e46cbb5a41c5d8107a59e\",\n                    \"user_id\": \"6559a807cff3bbaea20470c1\",\n                    \"tweet_id\": \"655da902b5a41c5d8107a578\"\n                }\n            ]\n        },\n        {\n            \"_id\": \"655da8fdb5a41c5d8107a577\",\n            \"user_id\": \"655da3f6b5a41c5d8107a566\",\n            \"tweet\": \"DEFG\",\n            \"created_at\": \"2023-11-22T07:08:45.592000Z\",\n            \"user\": {\n                \"_id\": \"655da3f6b5a41c5d8107a566\",\n                \"name\": \"Zawad Sikder\",\n                \"email\": \"zawad1992@hotmail.com\"\n            },\n            \"likes\": [\n                {\n                    \"_id\": \"655e46ccb5a41c5d8107a59f\",\n                    \"user_id\": \"6559a807cff3bbaea20470c1\",\n                    \"tweet_id\": \"655da8fdb5a41c5d8107a577\"\n                }\n            ]\n        },\n        {\n            \"_id\": \"655da7e2b5a41c5d8107a576\",\n            \"user_id\": \"655da3f6b5a41c5d8107a566\",\n            \"tweet\": \"DEF\",\n            \"created_at\": \"2023-11-22T07:04:02.737000Z\",\n            \"user\": {\n                \"_id\": \"655da3f6b5a41c5d8107a566\",\n                \"name\": \"Zawad Sikder\",\n                \"email\": \"zawad1992@hotmail.com\"\n            },\n            \"likes\": []\n        },\n        {\n            \"_id\": \"655da6c3b5a41c5d8107a575\",\n            \"user_id\": \"655da3f6b5a41c5d8107a566\",\n            \"tweet\": \"Z00003\",\n            \"created_at\": \"2023-11-22T06:59:15.275000Z\",\n            \"user\": {\n                \"_id\": \"655da3f6b5a41c5d8107a566\",\n                \"name\": \"Zawad Sikder\",\n                \"email\": \"zawad1992@hotmail.com\"\n            },\n            \"likes\": []\n        },\n        {\n            \"_id\": \"655da632b5a41c5d8107a574\",\n            \"user_id\": \"655da3f6b5a41c5d8107a566\",\n            \"tweet\": \"Z0002\",\n            \"created_at\": \"2023-11-22T06:56:50.809000Z\",\n            \"user\": {\n                \"_id\": \"655da3f6b5a41c5d8107a566\",\n                \"name\": \"Zawad Sikder\",\n                \"email\": \"zawad1992@hotmail.com\"\n            },\n            \"likes\": []\n        },\n        {\n            \"_id\": \"655da5e7b5a41c5d8107a573\",\n            \"user_id\": \"655da3f6b5a41c5d8107a566\",\n            \"tweet\": \"Z000001\",\n            \"created_at\": \"2023-11-22T06:55:35.825000Z\",\n            \"user\": {\n                \"_id\": \"655da3f6b5a41c5d8107a566\",\n                \"name\": \"Zawad Sikder\",\n                \"email\": \"zawad1992@hotmail.com\"\n            },\n            \"likes\": [\n                {\n                    \"_id\": \"655e46d0b5a41c5d8107a5a0\",\n                    \"user_id\": \"6559a807cff3bbaea20470c1\",\n                    \"tweet_id\": \"655da5e7b5a41c5d8107a573\"\n                }\n            ]\n        },\n        {\n            \"_id\": \"655da5a4b5a41c5d8107a572\",\n            \"user_id\": \"655da3f6b5a41c5d8107a566\",\n            \"tweet\": \"ABCD\",\n            \"created_at\": \"2023-11-22T06:54:28.182000Z\",\n            \"user\": {\n                \"_id\": \"655da3f6b5a41c5d8107a566\",\n                \"name\": \"Zawad Sikder\",\n                \"email\": \"zawad1992@hotmail.com\"\n            },\n            \"likes\": []\n        },\n        {\n            \"_id\": \"655da565b5a41c5d8107a571\",\n            \"user_id\": \"655da3f6b5a41c5d8107a566\",\n            \"tweet\": \"ZAWADDDDDD\",\n            \"created_at\": \"2023-11-22T06:53:25.913000Z\",\n            \"user\": {\n                \"_id\": \"655da3f6b5a41c5d8107a566\",\n                \"name\": \"Zawad Sikder\",\n                \"email\": \"zawad1992@hotmail.com\"\n            },\n            \"likes\": []\n        }\n    ],\n    \"followedUserIds\": [\n        \"655dce75b5a41c5d8107a57c\"\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "tweets by username",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseData = pm.response.json();\r",
+							"var ids = [];\r",
+							"\r",
+							"// Check if 'data' exists and is an array\r",
+							"if (responseData.data && Array.isArray(responseData.data)) {\r",
+							"    // Iterate over each element in the 'data' array\r",
+							"    responseData.data.forEach(item => {\r",
+							"        if (item._id) {\r",
+							"            ids.push(item._id); // Add the '_id' to the 'ids' array\r",
+							"        }\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"// Store the array of ids as a JSON string\r",
+							"pm.environment.set(\"tweetids\", JSON.stringify(ids));\r",
+							"\r",
+							"// Check if 'ids' is an array and has elements\r",
+							"if (Array.isArray(ids) && ids.length > 0) {\r",
+							"    // Select a random index\r",
+							"    var randomIndex = Math.floor(Math.random() * ids.length);\r",
+							"\r",
+							"    // Get the ID at the random index\r",
+							"    var randomId = ids[randomIndex];\r",
+							"\r",
+							"    // Store the randomly selected ID in a global variable\r",
+							"    pm.environment.set(\"randomTweetId\", randomId);\r",
+							"    //console.log(randomId);\r",
+							"} else {\r",
+							"    console.log(\"No IDs available to select, or IDs are not in the expected format\");\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/tweets/user/{{userId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"tweets",
+						"user",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "tweets by username",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/tweets/user/{{userId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"tweets",
+								"user",
+								"{{userId}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Wed, 22 Nov 2023 18:29:36 GMT"
 						},
 						{
 							"key": "Server",
@@ -825,7 +1307,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"_id\": \"6559ae3bcff3bbaea20470c2\",\n            \"user_id\": \"6559a807cff3bbaea20470c1\",\n            \"tweet\": \"This is an example tweet!\",\n            \"created_at\": \"2023-11-19T06:42:03.804000Z\",\n            \"user\": {\n                \"_id\": \"6559a807cff3bbaea20470c1\",\n                \"name\": \"Zawadul Kawum\",\n                \"email\": \"zawad1992@gmail.com\"\n            }\n        },\n        {\n            \"_id\": \"6559ae3ecff3bbaea20470c3\",\n            \"user_id\": \"6559a807cff3bbaea20470c1\",\n            \"tweet\": \"This is an example tweet!\",\n            \"created_at\": \"2023-11-19T06:42:06.136000Z\",\n            \"user\": {\n                \"_id\": \"6559a807cff3bbaea20470c1\",\n                \"name\": \"Zawadul Kawum\",\n                \"email\": \"zawad1992@gmail.com\"\n            }\n        },\n        {\n            \"_id\": \"6559ae3fcff3bbaea20470c4\",\n            \"user_id\": \"6559a807cff3bbaea20470c1\",\n            \"tweet\": \"This is an example tweet!\",\n            \"created_at\": \"2023-11-19T06:42:07.393000Z\",\n            \"user\": {\n                \"_id\": \"6559a807cff3bbaea20470c1\",\n                \"name\": \"Zawadul Kawum\",\n                \"email\": \"zawad1992@gmail.com\"\n            }\n        },\n        {\n            \"_id\": \"6559ae40cff3bbaea20470c5\",\n            \"user_id\": \"6559a807cff3bbaea20470c1\",\n            \"tweet\": \"This is an example tweet!\",\n            \"created_at\": \"2023-11-19T06:42:08.529000Z\",\n            \"user\": {\n                \"_id\": \"6559a807cff3bbaea20470c1\",\n                \"name\": \"Zawadul Kawum\",\n                \"email\": \"zawad1992@gmail.com\"\n            }\n        },\n        {\n            \"_id\": \"6559ae41cff3bbaea20470c6\",\n            \"user_id\": \"6559a807cff3bbaea20470c1\",\n            \"tweet\": \"This is an example tweet!\",\n            \"created_at\": \"2023-11-19T06:42:09.630000Z\",\n            \"user\": {\n                \"_id\": \"6559a807cff3bbaea20470c1\",\n                \"name\": \"Zawadul Kawum\",\n                \"email\": \"zawad1992@gmail.com\"\n            }\n        },\n        {\n            \"_id\": \"6559ae43cff3bbaea20470c7\",\n            \"user_id\": \"6559a807cff3bbaea20470c1\",\n            \"tweet\": \"This is an example tweet!\",\n            \"created_at\": \"2023-11-19T06:42:11.438000Z\",\n            \"user\": {\n                \"_id\": \"6559a807cff3bbaea20470c1\",\n                \"name\": \"Zawadul Kawum\",\n                \"email\": \"zawad1992@gmail.com\"\n            }\n        },\n        {\n            \"_id\": \"6559ae44cff3bbaea20470c8\",\n            \"user_id\": \"6559a807cff3bbaea20470c1\",\n            \"tweet\": \"This is an example tweet!\",\n            \"created_at\": \"2023-11-19T06:42:12.436000Z\",\n            \"user\": {\n                \"_id\": \"6559a807cff3bbaea20470c1\",\n                \"name\": \"Zawadul Kawum\",\n                \"email\": \"zawad1992@gmail.com\"\n            }\n        },\n        {\n            \"_id\": \"6559ae57cff3bbaea20470c9\",\n            \"user_id\": \"6559a807cff3bbaea20470c1\",\n            \"tweet\": \"This is an example tweet!\",\n            \"created_at\": \"2023-11-19T06:42:31.704000Z\",\n            \"user\": {\n                \"_id\": \"6559a807cff3bbaea20470c1\",\n                \"name\": \"Zawadul Kawum\",\n                \"email\": \"zawad1992@gmail.com\"\n            }\n        },\n        {\n            \"_id\": \"6559ae5ccff3bbaea20470ca\",\n            \"user_id\": \"6559a807cff3bbaea20470c1\",\n            \"tweet\": \"This is an example tweet!\",\n            \"created_at\": \"2023-11-19T06:42:36.195000Z\",\n            \"user\": {\n                \"_id\": \"6559a807cff3bbaea20470c1\",\n                \"name\": \"Zawadul Kawum\",\n                \"email\": \"zawad1992@gmail.com\"\n            }\n        },\n        {\n            \"_id\": \"6559ae63cff3bbaea20470cb\",\n            \"user_id\": \"6559a807cff3bbaea20470c1\",\n            \"tweet\": \"This is an example tweet!\",\n            \"created_at\": \"2023-11-19T06:42:43.999000Z\",\n            \"user\": {\n                \"_id\": \"6559a807cff3bbaea20470c1\",\n                \"name\": \"Zawadul Kawum\",\n                \"email\": \"zawad1992@gmail.com\"\n            }\n        }\n    ]\n}"
+					"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"current_page\": 1,\n        \"data\": [\n            {\n                \"_id\": \"655e2b9cb5a41c5d8107a58b\",\n                \"user_id\": \"6559a807cff3bbaea20470c1\",\n                \"tweet\": \"I don't know\",\n                \"created_at\": \"2023-11-22T16:26:04.014000Z\",\n                \"user\": {\n                    \"_id\": \"6559a807cff3bbaea20470c1\",\n                    \"name\": \"Zawadul Kawum\",\n                    \"email\": \"zawad1992@gmail.com\"\n                },\n                \"likes\": []\n            },\n            {\n                \"_id\": \"655df103b5a41c5d8107a580\",\n                \"user_id\": \"6559a807cff3bbaea20470c1\",\n                \"tweet\": \"Ok. How are you????\",\n                \"created_at\": \"2023-11-22T12:16:03.064000Z\",\n                \"user\": {\n                    \"_id\": \"6559a807cff3bbaea20470c1\",\n                    \"name\": \"Zawadul Kawum\",\n                    \"email\": \"zawad1992@gmail.com\"\n                },\n                \"likes\": []\n            },\n            {\n                \"_id\": \"655d9800b5a41c5d8107a562\",\n                \"user_id\": \"6559a807cff3bbaea20470c1\",\n                \"tweet\": \"ZAWADABCD\",\n                \"created_at\": \"2023-11-22T05:56:16.279000Z\",\n                \"user\": {\n                    \"_id\": \"6559a807cff3bbaea20470c1\",\n                    \"name\": \"Zawadul Kawum\",\n                    \"email\": \"zawad1992@gmail.com\"\n                },\n                \"likes\": []\n            },\n            {\n                \"_id\": \"655d97d6b5a41c5d8107a561\",\n                \"user_id\": \"6559a807cff3bbaea20470c1\",\n                \"tweet\": null,\n                \"created_at\": \"2023-11-22T05:55:34.614000Z\",\n                \"user\": {\n                    \"_id\": \"6559a807cff3bbaea20470c1\",\n                    \"name\": \"Zawadul Kawum\",\n                    \"email\": \"zawad1992@gmail.com\"\n                },\n                \"likes\": []\n            },\n            {\n                \"_id\": \"655d97d6b5a41c5d8107a560\",\n                \"user_id\": \"6559a807cff3bbaea20470c1\",\n                \"tweet\": null,\n                \"created_at\": \"2023-11-22T05:55:34.190000Z\",\n                \"user\": {\n                    \"_id\": \"6559a807cff3bbaea20470c1\",\n                    \"name\": \"Zawadul Kawum\",\n                    \"email\": \"zawad1992@gmail.com\"\n                },\n                \"likes\": []\n            }\n        ],\n        \"first_page_url\": \"http://localhost:8888/LARAVEL/fake_twitter_backend/api/tweets/user/6559a807cff3bbaea20470c1?page=1\",\n        \"from\": 1,\n        \"last_page\": 6,\n        \"last_page_url\": \"http://localhost:8888/LARAVEL/fake_twitter_backend/api/tweets/user/6559a807cff3bbaea20470c1?page=6\",\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://localhost:8888/LARAVEL/fake_twitter_backend/api/tweets/user/6559a807cff3bbaea20470c1?page=1\",\n                \"label\": \"1\",\n                \"active\": true\n            },\n            {\n                \"url\": \"http://localhost:8888/LARAVEL/fake_twitter_backend/api/tweets/user/6559a807cff3bbaea20470c1?page=2\",\n                \"label\": \"2\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://localhost:8888/LARAVEL/fake_twitter_backend/api/tweets/user/6559a807cff3bbaea20470c1?page=3\",\n                \"label\": \"3\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://localhost:8888/LARAVEL/fake_twitter_backend/api/tweets/user/6559a807cff3bbaea20470c1?page=4\",\n                \"label\": \"4\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://localhost:8888/LARAVEL/fake_twitter_backend/api/tweets/user/6559a807cff3bbaea20470c1?page=5\",\n                \"label\": \"5\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://localhost:8888/LARAVEL/fake_twitter_backend/api/tweets/user/6559a807cff3bbaea20470c1?page=6\",\n                \"label\": \"6\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://localhost:8888/LARAVEL/fake_twitter_backend/api/tweets/user/6559a807cff3bbaea20470c1?page=2\",\n                \"label\": \"Next &raquo;\",\n                \"active\": false\n            }\n        ],\n        \"next_page_url\": \"http://localhost:8888/LARAVEL/fake_twitter_backend/api/tweets/user/6559a807cff3bbaea20470c1?page=2\",\n        \"path\": \"http://localhost:8888/LARAVEL/fake_twitter_backend/api/tweets/user/6559a807cff3bbaea20470c1\",\n        \"per_page\": 5,\n        \"prev_page_url\": null,\n        \"to\": 5,\n        \"total\": 28\n    }\n}"
 				}
 			]
 		},
@@ -1322,6 +1804,149 @@
 			]
 		},
 		{
+			"name": "users by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseData = pm.response.json();\r",
+							"var ids = [];\r",
+							"\r",
+							"// Check if 'data' exists and is an array\r",
+							"if (responseData.data && Array.isArray(responseData.data)) {\r",
+							"    // Iterate over each element in the 'data' array\r",
+							"    responseData.data.forEach(item => {\r",
+							"        if (item._id) {\r",
+							"            ids.push(item._id); // Add the '_id' to the 'ids' array\r",
+							"        }\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"// Store the array of ids as a JSON string\r",
+							"pm.environment.set(\"userids\", JSON.stringify(ids));\r",
+							"\r",
+							"// Check if 'ids' is an array and has elements\r",
+							"if (Array.isArray(ids) && ids.length > 0) {\r",
+							"    // Select a random index\r",
+							"    var randomIndex = Math.floor(Math.random() * ids.length);\r",
+							"\r",
+							"    // Get the ID at the random index\r",
+							"    var randomId = ids[randomIndex];\r",
+							"\r",
+							"    // Store the randomly selected ID in a global variable\r",
+							"    pm.environment.set(\"randomFollowerId\", randomId);\r",
+							"    //console.log(randomId);\r",
+							"} else {\r",
+							"    console.log(\"No Follower IDs available to select, or IDs are not in the expected format\");\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/users/{{userId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "users by id",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/users/{{userId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{userId}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Wed, 22 Nov 2023 18:31:28 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1p PHP/8.1.10"
+						},
+						{
+							"key": "Vary",
+							"value": "Authorization"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.10"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "58"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"_id\": \"6559a807cff3bbaea20470c1\",\n        \"name\": \"Zawadul Kawum\",\n        \"email\": \"zawad1992@gmail.com\",\n        \"created_at\": \"2023-11-19T06:15:35.693000Z\",\n        \"followers\": [],\n        \"following\": [\n            {\n                \"_id\": \"655e3cbbb5a41c5d8107a592\",\n                \"followed_id\": \"655dce75b5a41c5d8107a57c\",\n                \"follower_id\": \"6559a807cff3bbaea20470c1\",\n                \"updated_at\": \"2023-11-22T17:39:07.457000Z\",\n                \"created_at\": \"2023-11-22T17:39:07.457000Z\",\n                \"followed\": {\n                    \"_id\": \"655dce75b5a41c5d8107a57c\",\n                    \"name\": \"Jahidul\",\n                    \"email\": \"z@z.com\",\n                    \"updated_at\": \"2023-11-22T09:48:37.595000Z\",\n                    \"created_at\": \"2023-11-22T09:48:37.595000Z\"\n                }\n            }\n        ]\n    }\n}"
+				}
+			]
+		},
+		{
 			"name": "followers",
 			"event": [
 				{
@@ -1383,7 +2008,7 @@
 					"header": [
 						{
 							"key": "Date",
-							"value": "Sun, 19 Nov 2023 09:44:25 GMT"
+							"value": "Wed, 22 Nov 2023 18:31:39 GMT"
 						},
 						{
 							"key": "Server",
@@ -1407,7 +2032,7 @@
 						},
 						{
 							"key": "X-RateLimit-Remaining",
-							"value": "53"
+							"value": "57"
 						},
 						{
 							"key": "Access-Control-Allow-Origin",
@@ -1431,7 +2056,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"_id\": \"6559d885cff3bbaea20470d0\",\n            \"followed_id\": \"6559a807cff3bbaea20470c1\",\n            \"follower_id\": \"6559a807cff3bbaea20470c1\",\n            \"created_at\": \"2023-11-19T09:42:29.194000Z\",\n            \"follower\": {\n                \"_id\": \"6559a807cff3bbaea20470c1\",\n                \"name\": \"Zawadul Kawum\",\n                \"email\": \"zawad1992@gmail.com\"\n            },\n            \"followed\": {\n                \"_id\": \"6559a807cff3bbaea20470c1\",\n                \"name\": \"Zawadul Kawum\",\n                \"email\": \"zawad1992@gmail.com\"\n            }\n        },\n        {\n            \"_id\": \"6559d8a0cff3bbaea20470d1\",\n            \"followed_id\": \"6559a24acff3bbaea20470bf\",\n            \"follower_id\": \"6559a807cff3bbaea20470c1\",\n            \"created_at\": \"2023-11-19T09:42:56.122000Z\",\n            \"follower\": {\n                \"_id\": \"6559a807cff3bbaea20470c1\",\n                \"name\": \"Zawadul Kawum\",\n                \"email\": \"zawad1992@gmail.com\"\n            },\n            \"followed\": {\n                \"_id\": \"6559a24acff3bbaea20470bf\",\n                \"name\": \"Brandi Raynor\",\n                \"email\": \"Norris63@example.org\"\n            }\n        }\n    ]\n}"
+					"body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"_id\": \"655e3cbbb5a41c5d8107a592\",\n            \"followed_id\": \"655dce75b5a41c5d8107a57c\",\n            \"follower_id\": \"6559a807cff3bbaea20470c1\",\n            \"created_at\": \"2023-11-22T17:39:07.457000Z\",\n            \"follower\": {\n                \"_id\": \"6559a807cff3bbaea20470c1\",\n                \"name\": \"Zawadul Kawum\",\n                \"email\": \"zawad1992@gmail.com\"\n            },\n            \"followed\": {\n                \"_id\": \"655dce75b5a41c5d8107a57c\",\n                \"name\": \"Jahidul\",\n                \"email\": \"z@z.com\"\n            }\n        }\n    ]\n}"
 				}
 			]
 		},
