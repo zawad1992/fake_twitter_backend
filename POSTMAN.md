@@ -1,6 +1,7 @@
 ## Overview
 This README document provides an overview and instructions for the FakeTwitter Postman collection. The collection is designed to interact with a mock Twitter-like API.
 
+
 ### Collection ID
 - **ID**: `14cb3b22-992d-4f48-893f-543c822cc172`
 
