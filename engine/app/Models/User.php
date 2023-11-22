@@ -6,6 +6,7 @@ use Jenssegers\Mongodb\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
+
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
@@ -56,5 +57,18 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function tweets()
+    {
+        return $this->hasMany('App\Models\Tweet', 'user_id', '_id');
+    }
+    public function followers()
+    {
+        return $this->hasMany('App\Models\Follower', 'followed_id', '_id');
+    }
+    public function following()
+    {
+        return $this->hasMany('App\Models\Follower', 'follower_id', '_id');
     }
 }
