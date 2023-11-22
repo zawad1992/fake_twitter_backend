@@ -33,7 +33,20 @@ Before you begin, ensure you have the following installed:
 
 ### Running the Project
 
-- To start the Laravel project, run `php artisan serve` from the root directory.
-- The application will be served at `http://localhost:8000` by default.
+- After installing all dependencies, navigate to the `engine` directory of the project.
+- Run the command `php artisan serve` to start the Laravel server.
+- By default, the application will be available at `http://localhost:8000`.
+- For users who prefer to run the project using XAMPP or LARAGON:
+    - Clone this repository into the respective project directory (e.g., `htdocs` for XAMPP, `www` for LARAGON).
+    - Ensure the server is pointed to the `public` directory within the `en
 
 Ensure that MongoDB is running in the background before you start the Laravel application.
+
+## Using the Postman Collection
+
+To test and interact with the API endpoints, please download and import the `FakeTwitter.postman_collection.json` file, which is located in the root directory of this repository.
+
+For detailed instructions on how to use the Postman collection, including setting up environment variables and executing requests, refer to the following guide:
+[Postman Collection Usage Guide](https://github.com/zawad1992/fake_twitter_backend/blob/master/POSTMAN.md)
+
+This guide provides step-by-step instructions to effectively utilize the Postman collection for testing the API endpoints of the Fake Twitter project.
