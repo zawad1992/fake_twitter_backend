@@ -87,9 +87,14 @@ class TweetsController extends Controller
             // Base query
             $query = $tweetModel
                         ->select('_id', 'user_id', 'tweet', 'created_at')
-                        ->with(['user' => function ($query) {
-                            $query->select('name', 'email');
-                        }])
+                        ->with([
+                            'user' => function ($query) {
+                                $query->select('name', 'email');
+                            },
+                            'likes' => function ($query) {
+                                $query->select('user_id','tweet_id');
+                            }
+                        ])
                         ->has('user') // Ensure the tweet has an associated user
                         ->where('user_id', '<>', $userid)
                         ->whereNotNull('user_id') // Exclude tweets where user_id is null
