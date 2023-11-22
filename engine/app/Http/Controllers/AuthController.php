@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 
 class AuthController extends Controller
 {
@@ -31,13 +33,10 @@ class AuthController extends Controller
      * @return JsonResponse
      */
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
         try {
-            $request->validate([
-                'email' => 'required|string|email',
-                'password' => 'required|string',
-            ]);
+           
             $credentials = $request->only('email', 'password');
     
             $token = Auth::attempt($credentials);
@@ -77,14 +76,9 @@ class AuthController extends Controller
      * @return JsonResponse
      */
 
-    public function register(Request $request){
+    public function register(RegisterRequest $request){
         try {
-            $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|string|email|max:255|unique:users',
-                'password' => 'required|string|min:6',
-            ]);
-    
+           
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
