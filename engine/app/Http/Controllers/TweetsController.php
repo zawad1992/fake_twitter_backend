@@ -20,7 +20,8 @@ class TweetsController extends Controller
                                 }
                             ])
                             ->orderBy('created_at', 'desc')
-                            ->get();
+                            ->paginate(5); // paginate with 5 items per page
+
             return response()->json([
                 'status' => 'success',
                 'data' => $dataObj,
@@ -46,7 +47,7 @@ class TweetsController extends Controller
                             ])
                             ->where('user_id', $userid)
                             ->orderBy('created_at', 'desc')
-                            ->get();
+                            ->paginate(5); // paginate with 5 items per page
             return response()->json([
                 'status' => 'success',
                 'data' => $dataObj,
@@ -68,7 +69,7 @@ class TweetsController extends Controller
             $tweetModel->save();
             // Load the user relationship
             $tweetModel->load('user');
-            
+
             return response()->json([
                 'status' => 'success',
                 'data' => $tweetModel,
