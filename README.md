@@ -18,18 +18,35 @@ Before you begin, ensure you have the following installed:
 ### Setting Up the Project
 
 1. **Clone the Repository:**
-   - Clone the project repository to your local machine.
+   - Clone the project repository to your local machine using the command:
+     ```bash
+     git clone https://github.com/zawad1992/fake_twitter_backend.git
+     ```
 
 2. **Install Dependencies:**
-   - Navigate to the `engine` directory of the project.
-   - Run `composer install` to install all the necessary dependencies.
+   - Navigate to the `engine` directory of the project:
+     ```bash
+     cd engine
+     ```
+   - Run `composer install` to install all the necessary dependencies, including the PHP MongoDB extension.
 
 3. **Environment Configuration:**
    - Copy the `.env.example` file to a new file named `.env`.
    - Modify the `.env` file to set up your database and other environment variables.
+   - Ensure you have MongoDB installed and configured, as it's required for the project.
 
 4. **Generate Application Key:**
-   - Run `php artisan key:generate` to generate a new application key. This will be added to your `.env` file.
+   - Run `php artisan key:generate` to generate a new application key. This will be automatically added to your `.env` file.
+
+5. **Running the Project:**
+   - To start the Laravel project, navigate to the `engine` directory and run `php artisan serve`.
+   - The application will be served at `http://localhost:8000` by default.
+   - If running the project with XAMPP or LARAGON, clone this repository inside the project directory (e.g., `htdocs`, `www`).
+
+6. **Using Postman Collection:**
+   - Please download and import `FakeTwitter.postman_collection.json` located in the root directory of this repository.
+   - For instructions on using the Postman collection, visit [this guide](https://github.com/zawad1992/fake_twitter_backend/blob/master/POSTMAN.md).
+
 
 ### Running the Project
 
