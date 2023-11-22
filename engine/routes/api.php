@@ -43,6 +43,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/users', [UsersController::class, 'index']);
 
     Route::get('/tweets', [TweetsController::class, 'index']);
+    Route::get('/tweets/user/{userid}', [TweetsController::class, 'usertweets']);
     Route::post('/tweets', [TweetsController::class, 'store']);
     Route::get('/tweets/{id}', [TweetsController::class, 'show']);
     Route::put('/tweets/{id}', [TweetsController::class, 'update']);
