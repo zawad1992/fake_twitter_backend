@@ -41,8 +41,10 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::post('/refresh', [AuthController::class, 'refresh']);
     
     Route::get('/users', [UsersController::class, 'index']);
+    Route::get('/users/{userid}', [UsersController::class, 'show']);
 
     Route::get('/tweets', [TweetsController::class, 'index']);
+    Route::get('/tweets/tranding/{userid}', [TweetsController::class, 'trandingTweets']);
     Route::get('/tweets/user/{userid}', [TweetsController::class, 'usertweets']);
     Route::post('/tweets', [TweetsController::class, 'store']);
     Route::get('/tweets/{id}', [TweetsController::class, 'show']);
