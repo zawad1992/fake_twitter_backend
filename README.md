@@ -1,4 +1,4 @@
-## Setting Up and Running the Laravel Project
+## Setting Up and Running the `fake_twitter_backend` Project
 
 ### Prerequisites
 
