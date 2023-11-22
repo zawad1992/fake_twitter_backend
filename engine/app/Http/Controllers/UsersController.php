@@ -25,4 +25,32 @@ class UsersController extends Controller
             ], 500);
         }
     }
+
+    public function show($id)
+    {
+        try {
+            $userModel = new User();
+            $dataObj = $userModel
+                            ->select('_id','name','email','created_at')
+                            ->with([
+                                'followers'=> function($query) {
+                                    $query->with(['follower']);
+                                },
+                                'following'=> function($query) {
+                                    $query->with(['followed']);
+                                },
+                            ])
+                            ->where('_id', $id)
+                            ->first();
+            return response()->json([
+                'status' => 'success',
+                'data' => $dataObj,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e,
+            ], 500);
+        }
+    }
 }
