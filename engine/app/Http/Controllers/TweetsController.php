@@ -66,6 +66,9 @@ class TweetsController extends Controller
             $tweetModel->user_id = $request->user_id;
             $tweetModel->tweet = $request->tweet;
             $tweetModel->save();
+            // Load the user relationship
+            $tweetModel->load('user');
+            
             return response()->json([
                 'status' => 'success',
                 'data' => $tweetModel,
