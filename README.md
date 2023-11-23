@@ -37,6 +37,7 @@ Before you begin, ensure you have the following installed:
 
 4. **Generate Application Key:**
    - Run `php artisan key:generate` to generate a new application key. This will be automatically added to your `.env` file.
+   - Run `php artisan jwt:secret` to generate a new secret key. This command is very essestial, otherwise you got JWT error.
 
 5. **Running the Project:**
    - To start the Laravel project, navigate to the `engine` directory and run `php artisan serve`.
