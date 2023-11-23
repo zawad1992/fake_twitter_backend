@@ -21,10 +21,10 @@ class TweetsController extends Controller
                             ->select('_id','user_id','tweet','created_at')
                             ->with([
                                 'user'=>function ($query) {
-                                    $query->select('name','email');
+                                    $query->select('_id','name','email');
                                 },
                                 'likes' => function ($query) {
-                                    $query->select('user_id','tweet_id');
+                                    $query->select('_id','user_id','tweet_id');
                                 }
                             ])
                             ->has('user'); // Ensure the tweet has an associated user
@@ -57,10 +57,10 @@ class TweetsController extends Controller
                             ->select('_id','user_id','tweet','created_at')
                             ->with([
                                 'user'=>function ($query) {
-                                    $query->select('name','email');
+                                    $query->select('_id','name','email');
                                 },
                                 'likes' => function ($query) {
-                                    $query->select('user_id','tweet_id');
+                                    $query->select('_id','user_id','tweet_id');
                                 }
                             ])
                             ->where('user_id', $userid)
@@ -89,10 +89,10 @@ class TweetsController extends Controller
                         ->select('_id', 'user_id', 'tweet', 'created_at')
                         ->with([
                             'user' => function ($query) {
-                                $query->select('name', 'email');
+                                $query->select('_id','name', 'email');
                             },
                             'likes' => function ($query) {
-                                $query->select('user_id','tweet_id');
+                                $query->select('_id','user_id','tweet_id');
                             }
                         ])
                         ->has('user') // Ensure the tweet has an associated user
@@ -159,7 +159,7 @@ class TweetsController extends Controller
                             ->select('_id','user_id','tweet','created_at')
                             ->with([
                                 'user'=>function ($query) {
-                                    $query->select('name','email');
+                                    $query->select('_id','name','email');
                                 }
                             ])
                             ->where('_id', $id)
