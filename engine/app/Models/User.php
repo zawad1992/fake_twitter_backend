@@ -12,6 +12,7 @@ class User extends Authenticatable implements JWTSubject
     use Notifiable;
 
     /**
+     * The connection name for the model.
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
