@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  docker_laravel:
+    image: fake-twitter-backend-images:v1
+    ports:
+      - "9000:9000"
+    environment:
+      - MYSQL_HOST=db-mariadb
+      - MYSQL_DATABASE=dbfaketwitter
+      - MYSQL_USERNAME=root
+      - MYSQL_ROOT_PASSWORD=root_password
+    container_name: fake-twitter-backend-container
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:9000"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 3
