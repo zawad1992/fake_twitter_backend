@@ -13,9 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('tweets');
         Schema::create('tweets', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->integer('_id')->unsigned()->autoIncrement();
+            $table->unsignedInteger('user_id');
+            $table->text('tweet')->charset('utf8mb4')->collation('utf8mb4_unicode_ci');
+            $table->integer('likes_count')->default(0);
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
+
+            // Foreign key constraint
+            $table->foreign('user_id')->references('_id')->on('users')->onDelete('cascade');
         });
     }
 

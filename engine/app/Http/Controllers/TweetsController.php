@@ -15,7 +15,6 @@ class TweetsController extends Controller
         try {
             // Subquery to find the IDs of users followed by the given user
             $followedUserIds = Follower::where('follower_id', $userid)->pluck('followed_id')->toArray();
-
             $tweetModel = new Tweet();
             $dataObj = $tweetModel
                             ->select('_id','user_id','tweet','created_at')
@@ -24,13 +23,13 @@ class TweetsController extends Controller
                                     $query->select('_id','name','email');
                                 },
                                 'likes' => function ($query) {
-                                    $query->select('_id','user_id','tweet_id');
+                                    $query->select('user_id','tweet_id');
                                 }
                             ])
                             ->has('user'); // Ensure the tweet has an associated user
 
             if (!empty($userid)) {
-                $dataObj = $dataObj->whereIn('user_id', $followedUserIds);
+                $dataObj = $dataObj->whereIn('tweets.user_id', $followedUserIds);
             }
 
             $dataObj = $dataObj
@@ -44,7 +43,7 @@ class TweetsController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Something went wrong',
+                'message' => $e,
             ], 500);
         }
     }
@@ -60,7 +59,7 @@ class TweetsController extends Controller
                                     $query->select('_id','name','email');
                                 },
                                 'likes' => function ($query) {
-                                    $query->select('_id','user_id','tweet_id');
+                                    $query->select('user_id','tweet_id');
                                 }
                             ])
                             ->where('user_id', $userid)
@@ -92,7 +91,7 @@ class TweetsController extends Controller
                                 $query->select('_id','name', 'email');
                             },
                             'likes' => function ($query) {
-                                $query->select('_id','user_id','tweet_id');
+                                $query->select('user_id','tweet_id');
                             }
                         ])
                         ->has('user') // Ensure the tweet has an associated user
@@ -123,7 +122,7 @@ class TweetsController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Something went wrong',
+                'message' => $e,
             ], 500);
         }        
     }
@@ -147,7 +146,7 @@ class TweetsController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Something went wrong',
+                'message' =>  $e,
             ], 500);
         }
     }

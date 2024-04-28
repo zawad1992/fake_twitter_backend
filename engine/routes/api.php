@@ -17,13 +17,20 @@ Route::get('/health', function () {
 });
 
 Route::get('/ping', function (Request $request) {    
-    $connection = DB::connection('mongodb');
-    $msg = 'MongoDB is accessible!';
+    $connection = DB::connection('mysql'); // Change to 'mysql'
+    $msg = 'MySQL is accessible!';
+
     try {  
-        $connection->command(['ping' => 1]);  
+        $connection->getPdo(); // Get the PDO instance to check connection
+        if($connection->getPdo()) {
+            $msg = 'MySQL is accessible!';
+        } else {
+            $msg = 'MySQL is not accessible.';
+        }
     } catch (\Exception $e) {  
-        $msg = 'MongoDB is not accessible. Error: ' . $e->getMessage();
+        $msg = 'MySQL is not accessible. Error: ' . $e->getMessage();
     }
+
     return ['msg' => $msg];
 });
 
