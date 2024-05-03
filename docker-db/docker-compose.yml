@@ -6,13 +6,13 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3307:3306"
+      - "3306:3306"
     environment:
       MYSQL_HOST: db-mariadb
       MYSQL_USERNAME: root
       MYSQL_ROOT_PASSWORD: root_password
       MYSQL_DATABASE: dbfaketwitter
-      MYSQL_DB_PORT: 3307
+      MYSQL_DB_PORT: 3306
     container_name: db-mariadb
     # command: ["bash", "-c", "sleep 10 && mysql -uroot -proot_password -e 'CREATE DATABASE IF NOT EXISTS dbfaketwitter;'"]
 

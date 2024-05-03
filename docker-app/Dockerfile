@@ -37,7 +37,7 @@ RUN apk del freetype-dev libpng-dev libjpeg-turbo-dev
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Set working directory
-WORKDIR /var/www
+WORKDIR /var/www/html
 
 # Set a build argument to pass a unique value for cache invalidation
 # ARG CACHEBUST=1
@@ -48,7 +48,12 @@ RUN git clone -b db-mysql https://github.com/zawad1992/fake_twitter_backend.git 
     rm -rf /tmp/repo
 
 # Change into the directory containing composer.json
-WORKDIR /var/www/engine
+WORKDIR /var/www/html/engine
+
+RUN git config --global --add safe.directory /var/www/html
+
+# Update the repository to fetch the latest changes
+RUN git pull origin db-mysql
 
 # Copy .env.example to .env
 RUN cp .env.example .env
@@ -60,16 +65,19 @@ RUN composer install
 # RUN chmod -R 755 /var/www/engine
 
 RUN php artisan key:generate
-
+RUN php artisan jwt:secret
 RUN composer dump-autoload --optimize
+
+RUN chmod -R 777 storage/
+RUN chown -R www-data:www-data storage/
 
 # RUN php artisan migrate:status
 
-WORKDIR /var/www
+WORKDIR /var/www/html
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
+
 CMD ["php-fpm"]
 
-# EXPOSE 9000
 # CMD ["php artisan serve --port=9000"]
