@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fake-twitter-fpm-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fake-twitter-fpm
+  template:
+    metadata:
+      labels:
+        app: fake-twitter-fpm
+    spec:
+      containers:
+      - name: fake-twitter-fpm
+        image: docker-app-fake-twitter-fpm:latest
+        ports:
+        - containerPort: 9000
+        env:
+        - name: MYSQL_HOST
+          value: "mariadb-service"
+        - name: MYSQL_DATABASE
+          value: "dbfaketwitter"
+        - name: MYSQL_USERNAME
+          value: "root"
+        - name: MYSQL_ROOT_PASSWORD
+          value: "root_password"
+        - name: MYSQL_DB_PORT
+          value: "3306"

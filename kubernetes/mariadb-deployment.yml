@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mariadb
+  template:
+    metadata:
+      labels:
+        app: mariadb
+    spec:
+      containers:
+      - name: mariadb
+        image: docker-db-mariadb:latest
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_HOST
+          value: "db-mariadb"
+        - name: MYSQL_USERNAME
+          value: "root"
+        - name: MYSQL_ROOT_PASSWORD
+          value: "root_password"
+        - name: MYSQL_DATABASE
+          value: "dbfaketwitter"
+        - name: MYSQL_DB_PORT
+          value: "3306"

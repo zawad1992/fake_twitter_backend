@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fake-twitter-nginx-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fake-twitter-nginx
+  template:
+    metadata:
+      labels:
+        app: fake-twitter-nginx
+    spec:
+      containers:
+      - name: fake-twitter-nginx
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: fake-twitter-volume
+          mountPath: /var/www/html
+        - name: vhost-conf
+          mountPath: /etc/nginx/conf.d/default.conf
+      volumes:
+      - name: fake-twitter-volume
+        emptyDir: {}
+      - name: vhost-conf
+        hostPath:
+          path: ./vhost.conf

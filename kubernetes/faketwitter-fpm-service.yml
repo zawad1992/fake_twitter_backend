@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fake-twitter-fpm-service
+spec:
+  selector:
+    app: fake-twitter-fpm
+  ports:
+    - protocol: TCP
+      port: 9000
+      targetPort: 9000
